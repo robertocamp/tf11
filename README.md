@@ -61,8 +61,8 @@
 - `terraform show -no-color tfplan-fri-31DEC-1000.plan > plan.txt`
 
 ## issue with `terraform apply`
--  Error: error creating EKS Cluster (demo-dev-c1-cluster): InvalidParameterException: The keyArn for encryptionConfig is invalid.
-- this variable needs to be set to the full ARN, not just the kms key ID: `cluster_encryption_config_kms_key_id`
+-  `Error: error creating EKS Cluster (demo-dev-c1-cluster): InvalidParameterException: The keyArn for encryptionConfig is invalid.`
+- this variable needs to be set to the **full ARN**, not just the kms key ID: `cluster_encryption_config_kms_key_id`
 - this confguration is coming from the "locals" block in the main module https://github.com/cloudposse/terraform-aws-eks-cluster
 
 ## Terraform *locals* and *expressions*
