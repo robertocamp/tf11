@@ -4,9 +4,9 @@ availability_zones = ["us-east-2a", "us-east-2b"]
 
 namespace = "demo"
 
-stage = "demo"
+stage = "dev"
 
-name = "eks"
+name = "c1"
 
 kubernetes_version = "1.21"
 
@@ -27,6 +27,8 @@ min_size = 2
 kubernetes_labels = {}
 
 cluster_encryption_config_enabled = true
+
+cluster_encryption_config_kms_key_policy = "key-consolepolicy-3"
 
 addons = [
   {

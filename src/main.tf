@@ -14,8 +14,9 @@ locals {
   # The usage of the specific kubernetes.io/cluster/* resource tags below are required
   # for EKS and Kubernetes to discover and manage networking resources
   # https://www.terraform.io/docs/providers/aws/guides/eks-getting-started.html#base-vpc-networking
-  tags = { "kubernetes.io/cluster/${module.label.id}" = "shared" }
 
+  tags = { "kubernetes.io/cluster/${module.label.id}" = "shared" }
+  
   # Unfortunately, most_recent (https://github.com/cloudposse/terraform-aws-eks-workers/blob/34a43c25624a6efb3ba5d2770a601d7cb3c0d391/main.tf#L141)
   # variable does not work as expected, if you are not going to use custom ami you should
   # enforce usage of eks_worker_ami_name_filter variable to set the right kubernetes version for EKS workers,
@@ -31,6 +32,8 @@ locals {
     "kubernetes.io/role/internal-elb" : 1
   }
 }
+
+
 
 module "vpc" {
   source  = "cloudposse/vpc/aws"
@@ -60,7 +63,8 @@ module "subnets" {
 }
 
 module "eks_cluster" {
-  source = "../../"
+  source = "cloudposse/eks-cluster/aws"
+  version = "0.44.1"
 
   region                       = var.region
   vpc_id                       = module.vpc.vpc_id

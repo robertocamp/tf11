@@ -27,3 +27,10 @@ override.tf.json
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 # example: *tfplan*
+
+# all json files for now--mainly to protect the kms key
+*.json
+
+# do not store plan info in github
+*.plan
+plan.*
