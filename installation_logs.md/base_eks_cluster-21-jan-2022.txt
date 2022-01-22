@@ -1,0 +1,66 @@
+# INSTALLATION LOGS 22-JAN-2022
+## terraform apply
+Apply complete! Resources: 12 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+eks_cluster_arn = "arn:aws:eks:us-east-2:240195868935:cluster/demo-dev-c1-cluster"
+eks_cluster_endpoint = "https://CD369551840828C045B20DD58D9AF948.gr7.us-east-2.eks.amazonaws.com"
+eks_cluster_id = "demo-dev-c1-cluster"
+eks_cluster_identity_oidc_issuer = "https://oidc.eks.us-east-2.amazonaws.com/id/CD369551840828C045B20DD58D9AF948"
+eks_cluster_managed_security_group_id = "sg-0ccd335dace8739f0"
+eks_cluster_security_group_arn = "arn:aws:ec2:us-east-2:240195868935:security-group/sg-0203fcd03aa042545"
+eks_cluster_security_group_id = "sg-0203fcd03aa042545"
+eks_cluster_security_group_name = "demo-dev-c1-cluster"
+eks_cluster_version = "1.21"
+eks_node_group_arn = "arn:aws:eks:us-east-2:240195868935:nodegroup/demo-dev-c1-cluster/demo-dev-c1-workers/20bf417f-9fb0-bdb9-9f26-fbe9b58dee25"
+eks_node_group_id = "demo-dev-c1-cluster:demo-dev-c1-workers"
+eks_node_group_resources = tolist([
+  tolist([
+    {
+      "autoscaling_groups" = tolist([
+        {
+          "name" = "eks-demo-dev-c1-workers-20bf417f-9fb0-bdb9-9f26-fbe9b58dee25"
+        },
+      ])
+      "remote_access_security_group_id" = ""
+    },
+  ]),
+])
+eks_node_group_role_arn = "arn:aws:iam::240195868935:role/demo-dev-c1-workers"
+eks_node_group_role_name = "demo-dev-c1-workers"
+eks_node_group_status = "ACTIVE"
+private_subnet_cidrs = [
+  "172.16.0.0/19",
+  "172.16.32.0/19",
+]
+public_subnet_cidrs = [
+  "172.16.96.0/19",
+  "172.16.128.0/19",
+]
+vpc_cidr = "172.16.0.0/16"
+
+## kubectl
+- `aws eks update-kubeconfig \
+  --region us-east-2 \
+  --name demo-dev-c1-cluster`
+- `kubectl config get-contexts`
+
+
+➜  ~ kubectl config get-contexts
+CURRENT   NAME                                                             CLUSTER                                                          AUTHINFO                                                         NAMESPACE
+*         arn:aws:eks:us-east-2:240195868935:cluster/demo-dev-c1-cluster   arn:aws:eks:us-east-2:240195868935:cluster/demo-dev-c1-cluster   arn:aws:eks:us-east-2:240195868935:cluster/demo-dev-c1-cluster   
+➜  ~ 
+➜  ~ 
+➜  ~ 
+➜  ~ 
+➜  ~ kubectl get namespaces
+NAME              STATUS   AGE
+default           Active   20m
+kube-node-lease   Active   20m
+kube-public       Active   20m
+kube-system       Active   20m
+➜  ~ kubectl get svc
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   23m
+➜  ~ 
