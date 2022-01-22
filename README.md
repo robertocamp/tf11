@@ -13,7 +13,7 @@
 ### AWS ALB
 - kubernetes [loadblancer]( https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer)
 - kubernetes [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
-- Do I need AWS ALB for application running in EKS? [Start here](https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html)  --yes , read the docs!
+- Do I need AWS ALB for application running in EKS? [Start here](https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html)  --not strictly required, but highly recommended ; read the docs!
   + When you create a Kubernetes ingress, an AWS Application Load Balancer (ALB) is provisioned that load balances application traffic.
   + ALBs can be used with pods that are deployed to nodes or to AWS Fargate
   + You can deploy an ALB to public or private subnets.
@@ -96,12 +96,13 @@
 
 
 
-## kubectl configuration after cluster is up
+## kubectl configuration and checkout after cluster is up
 
+- setup kubeconfig
 ```
 aws eks update-kubeconfig \
   --region us-east-2 \
   --name demo-dev-c1-cluster
   ```
-
+- validate context configuration: `kubectl config get-contexts`
 - validate cluster communication: `kubectl get svc`
