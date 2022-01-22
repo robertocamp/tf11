@@ -1,10 +1,32 @@
 # tf11: AWS EKS cluster
-> AWS TF deployment based on https://github.com/cloudposse/terraform-aws-eks-cluster/blob/master/examples/complete/main.tf
+> AWS TF deployment based on:
+- https://github.com/cloudposse/terraform-aws-eks-cluster/blob/master/examples/complete/main.tf
+
+## Module Design and Project Objectives
+### base EKS cluster: [CloudPosse](https://github.com/cloudposse/terraform-aws-eks-cluster)
+- the objective of the project is to create a full-blown EKS cluster that can host a kubernetes application
+- The CloudPossee EKS module will provising the following resources:
+  + EKS cluster of master nodes
+  + IAM Role to allow the cluster to access other AWS services
+  + Security Group which is used by EKS works to connect to the cluster and kubelets and pods to reciev communication from the cluster controle plane
+  + the module creates and automicially applies an authentication ConfigMap to allow the worker nodes to join the cluster and to add additional users/roles/accounts
+### AWS ALB
+- kubernetes [loadblancer]( https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer)
+- kubernetes [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- Do I need AWS ALB for application running in EKS? [Start here](https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html)  --yes , read the docs!
+  + When you create a Kubernetes ingress, an AWS Application Load Balancer (ALB) is provisioned that load balances application traffic.
+  + ALBs can be used with pods that are deployed to nodes or to AWS Fargate
+  + You can deploy an ALB to public or private subnets.
+  + with ALB, *application traffic is balanced at L7 of the OSI model*
+  + To load balance network traffic at L4, *you deploy a Kubernetes service of the LoadBalancer type*
+  + in order to load balance traffic to EKS application you must have:
+    - a working EKS cluster
+    - the AWS Load Balancer Controller provisioned on your cluster
 ## project setup
 1. cd ~/documents/code
 2. clone two github repos:
   1. cloud posee eks cluster: `git clone https://github.com/cloudposse/terraform-aws-eks-cluster.git`
-  2. personal project (this project) repo: g`it clone git@github.com:robertocamp/tf11.git`
+  2. personal project (this project) repo: `git clone git@github.com:robertocamp/tf11.git`
 3. copy example files into this project:
   1. `cd /Users/robert/Documents/CODE/tf11`
   2. `mkdir src`
@@ -52,8 +74,15 @@
   - These services do not support encryption with asymmetric KMS keys
   - EKS service will use **symmetric KMS keys**
   #### must treat kms key with care:  cannot store in source control!
-  - worse-case, must send on CLI with `plan` or `apply` , or in env with “TF_VAR_...”   
+  - worse-case, must send on CLI with `plan` or `apply` , or in env with “TF_VAR_...” 
+  ##### manual setup of kms key with TF_VAR_{name}
+  - in this design a kms key with alias "cluster-1-kms" was setup in the AWS console
+  - the arn for the key is then passed into Terraform using the environment variable method
+  - https://www.terraform.io/cli/config/environment-variables
+  - export TF_VAR_cluster_encryption_config_kms_key_id=arn:aws:kms:us-east-2:240195868935:key/3fad647b-db99-4b5e-bdb7-9f2d78410077
+  - this method suffices for a demo EKS cluster
 
+## EKS Cluster Role
 
 ## Terraform plan command with output file
 - `terraform plan -out=tfplan-fri-31DEC-1000.plan`
