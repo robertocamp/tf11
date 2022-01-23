@@ -106,3 +106,65 @@ aws eks update-kubeconfig \
   ```
 - validate context configuration: `kubectl config get-contexts`
 - validate cluster communication: `kubectl get svc`
+
+## ALB and Ingress setup
+- after the base EKS cluster is up and running (validated with kubectl) merge into main and then checkout a new branch to complete the AWS ALB and EKS ingress configuration
+- `git checkout main`
+- `git merge dev1`
+- `git add .`
+- `git commit -am "merge dev1 into main"`
+- `git push "update main with dev1 branch"`
+- `git checkout -b alb_and_ingress`
+
+### CloudPosse alb and ingress modules:
+> the strategy will be to integrate  CloudPosse alb-ingrress module into the main.tf , using the resources that are already crated like VPC , as inputs to the alb-ingress module:  https://github.com/cloudposse/terraform-aws-alb-ingress
+1. take the example code at https://github.com/cloudposse/terraform-aws-alb-ingress/blob/master/examples/complete/main.tf
+2. identify the latest version tag and insert that into the code
+2. paste it in to the exiting main.tf,  but remove everything above `module "alb"`
+3. figure out which variables need to either passed in from the existing eks module, or declared as new
+```
+module "alb" {
+  source  = "cloudposse/alb/aws"
+  version = "0.24.2"
+
+  vpc_id                                  = module.vpc.vpc_id
+  security_group_ids                      = [module.vpc.vpc_default_security_group_id]
+  subnet_ids                              = module.subnets.public_subnet_ids
+  internal                                = var.internal
+  http_enabled                            = var.http_enabled
+  access_logs_enabled                     = var.access_logs_enabled
+  alb_access_logs_s3_bucket_force_destroy = var.alb_access_logs_s3_bucket_force_destroy
+  cross_zone_load_balancing_enabled       = var.cross_zone_load_balancing_enabled
+  http2_enabled                           = var.http2_enabled
+  idle_timeout                            = var.idle_timeout
+  ip_address_type                         = var.ip_address_type
+  deletion_protection_enabled             = var.deletion_protection_enabled
+  deregistration_delay                    = var.deregistration_delay
+  health_check_path                       = var.health_check_path
+  health_check_timeout                    = var.health_check_timeout
+  health_check_healthy_threshold          = var.health_check_healthy_threshold
+  health_check_unhealthy_threshold        = var.health_check_unhealthy_threshold
+  health_check_interval                   = var.health_check_interval
+  health_check_matcher                    = var.health_check_matcher
+  target_group_port                       = var.target_group_port
+  target_group_target_type                = var.target_group_target_type
+
+  context = module.this.context
+}
+
+module "alb_ingress" {
+  source = "../.."
+
+  vpc_id                        = module.vpc.vpc_id
+  authentication_type           = var.authentication_type
+  unauthenticated_priority      = var.unauthenticated_priority
+  unauthenticated_paths         = var.unauthenticated_paths
+  slow_start                    = var.slow_start
+  stickiness_enabled            = var.stickiness_enabled
+  default_target_group_enabled  = false
+  target_group_arn              = module.alb.default_target_group_arn
+  unauthenticated_listener_arns = [module.alb.http_listener_arn]
+
+  context = module.this.context
+}
+```
