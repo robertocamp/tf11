@@ -139,18 +139,3 @@ output "access_logs_bucket_id" {
   description = "The S3 bucket ID for access logs"
   value       = module.alb.access_logs_bucket_id
 }
-
-# output "target_group_name" {
-#   description = "ALB Target Group name"
-#   value       = module.alb_ingress.target_group_name
-# }
-
-# output "target_group_arn" {
-#   description = "ALB Target Group ARN"
-#   value       = module.alb_ingress.target_group_arn
-# }
-
-# output "target_group_arn_suffix" {
-#   description = "ALB Target Group ARN suffix"
-#   value       = module.alb_ingress.target_group_arn_suffix
-# }
