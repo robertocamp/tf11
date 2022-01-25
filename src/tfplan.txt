@@ -1,0 +1,1984 @@
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the
+last "terraform apply":
+
+  # module.alb.aws_security_group.default[0] has been deleted
+  - resource "aws_security_group" "default" {
+      - arn                    = "arn:aws:ec2:us-east-2:240195868935:security-group/sg-05a6c86409541ae42" -> null
+      - description            = "Controls access to the ALB (HTTP/HTTPS)" -> null
+      - egress                 = [] -> null
+      - id                     = "sg-05a6c86409541ae42" -> null
+      - ingress                = [] -> null
+      - name                   = "demo-dev-c1" -> null
+      - owner_id               = "240195868935" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {
+          - "Name"      = "demo-dev-c1"
+          - "Namespace" = "demo"
+          - "Stage"     = "dev"
+        } -> null
+      - tags_all               = {
+          - "Name"      = "demo-dev-c1"
+          - "Namespace" = "demo"
+          - "Stage"     = "dev"
+        } -> null
+      - vpc_id                 = "vpc-0ff38cbab2009f223" -> null
+    }
+  # module.alb.aws_security_group_rule.egress[0] has been deleted
+  - resource "aws_security_group_rule" "egress" {
+      - cidr_blocks       = [
+          - "0.0.0.0/0",
+        ] -> null
+      - from_port         = 0 -> null
+      - id                = "sgrule-1543817086" -> null
+      - protocol          = "-1" -> null
+      - security_group_id = "sg-05a6c86409541ae42" -> null
+      - self              = false -> null
+      - to_port           = 0 -> null
+      - type              = "egress" -> null
+    }
+  # module.alb.aws_security_group_rule.http_ingress[0] has been deleted
+  - resource "aws_security_group_rule" "http_ingress" {
+      - cidr_blocks       = [
+          - "0.0.0.0/0",
+        ] -> null
+      - from_port         = 80 -> null
+      - id                = "sgrule-768673344" -> null
+      - prefix_list_ids   = [] -> null
+      - protocol          = "tcp" -> null
+      - security_group_id = "sg-05a6c86409541ae42" -> null
+      - self              = false -> null
+      - to_port           = 80 -> null
+      - type              = "ingress" -> null
+    }
+  # module.eks_cluster.module.aws_security_group.aws_security_group.default[0] has been deleted
+  - resource "aws_security_group" "default" {
+      - arn                    = "arn:aws:ec2:us-east-2:240195868935:security-group/sg-0f1105686f6976c18" -> null
+      - description            = "Security Group for EKS cluster" -> null
+      - egress                 = [] -> null
+      - id                     = "sg-0f1105686f6976c18" -> null
+      - ingress                = [] -> null
+      - name                   = "demo-dev-c1-cluster" -> null
+      - owner_id               = "240195868935" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {
+          - "Attributes" = "cluster"
+          - "Name"       = "demo-dev-c1-cluster"
+          - "Namespace"  = "demo"
+          - "Stage"      = "dev"
+        } -> null
+      - tags_all               = {
+          - "Attributes" = "cluster"
+          - "Name"       = "demo-dev-c1-cluster"
+          - "Namespace"  = "demo"
+          - "Stage"      = "dev"
+        } -> null
+      - vpc_id                 = "vpc-0ff38cbab2009f223" -> null
+
+      - timeouts {
+          - create = "10m" -> null
+          - delete = "15m" -> null
+        }
+    }
+  # module.eks_cluster.module.aws_security_group.aws_security_group_rule.keyed["_allow_all_egress_"] has been deleted
+  - resource "aws_security_group_rule" "keyed" {
+      - cidr_blocks       = [
+          - "0.0.0.0/0",
+        ] -> null
+      - description       = "Allow all egress" -> null
+      - from_port         = 0 -> null
+      - id                = "sgrule-3806457674" -> null
+      - ipv6_cidr_blocks  = [
+          - "::/0",
+        ] -> null
+      - prefix_list_ids   = [] -> null
+      - protocol          = "-1" -> null
+      - security_group_id = "sg-0f1105686f6976c18" -> null
+      - self              = false -> null
+      - to_port           = 0 -> null
+      - type              = "egress" -> null
+    }
+  # module.vpc.aws_default_security_group.default[0] has been deleted
+  - resource "aws_default_security_group" "default" {
+      - arn                    = "arn:aws:ec2:us-east-2:240195868935:security-group/sg-07eb2e4f829b3ce90" -> null
+      - description            = "default VPC security group" -> null
+      - egress                 = [] -> null
+      - id                     = "sg-07eb2e4f829b3ce90" -> null
+      - ingress                = [] -> null
+      - name                   = "default" -> null
+      - owner_id               = "240195868935" -> null
+      - revoke_rules_on_delete = false -> null
+      - tags                   = {
+          - "Name"                                      = "Default Security Group"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        } -> null
+      - tags_all               = {
+          - "Name"                                      = "Default Security Group"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        } -> null
+      - vpc_id                 = "vpc-0ff38cbab2009f223" -> null
+    }
+  # module.vpc.aws_internet_gateway.default[0] has been deleted
+  - resource "aws_internet_gateway" "default" {
+      - arn      = "arn:aws:ec2:us-east-2:240195868935:internet-gateway/igw-012e34af5dddf09c0" -> null
+      - id       = "igw-012e34af5dddf09c0" -> null
+      - owner_id = "240195868935" -> null
+      - tags     = {
+          - "Name"                                      = "demo-dev-c1"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        } -> null
+      - tags_all = {
+          - "Name"                                      = "demo-dev-c1"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        } -> null
+      - vpc_id   = "vpc-0ff38cbab2009f223" -> null
+    }
+  # module.vpc.aws_vpc.default[0] has been deleted
+  - resource "aws_vpc" "default" {
+      - arn                              = "arn:aws:ec2:us-east-2:240195868935:vpc/vpc-0ff38cbab2009f223" -> null
+      - assign_generated_ipv6_cidr_block = true -> null
+      - cidr_block                       = "172.16.0.0/16" -> null
+      - default_network_acl_id           = "acl-031a112d75630e96a" -> null
+      - default_route_table_id           = "rtb-00e66c18b318b14ff" -> null
+      - default_security_group_id        = "sg-07eb2e4f829b3ce90" -> null
+      - dhcp_options_id                  = "dopt-e190378a" -> null
+      - enable_classiclink               = false -> null
+      - enable_classiclink_dns_support   = false -> null
+      - enable_dns_hostnames             = true -> null
+      - enable_dns_support               = true -> null
+      - id                               = "vpc-0ff38cbab2009f223" -> null
+      - instance_tenancy                 = "default" -> null
+      - ipv6_association_id              = "vpc-cidr-assoc-03afc624c52c1ba3c" -> null
+      - ipv6_cidr_block                  = "2600:1f16:8a7:df00::/56" -> null
+      - main_route_table_id              = "rtb-00e66c18b318b14ff" -> null
+      - owner_id                         = "240195868935" -> null
+      - tags                             = {
+          - "Name"                                      = "demo-dev-c1"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        } -> null
+      - tags_all                         = {
+          - "Name"                                      = "demo-dev-c1"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        } -> null
+    }
+  # module.subnets.aws_subnet.public[0] has been deleted
+  - resource "aws_subnet" "public" {
+      - arn                             = "arn:aws:ec2:us-east-2:240195868935:subnet/subnet-0e6026e6dbf7ce097" -> null
+      - assign_ipv6_address_on_creation = false -> null
+      - availability_zone               = "us-east-2a" -> null
+      - availability_zone_id            = "use2-az1" -> null
+      - cidr_block                      = "172.16.96.0/19" -> null
+      - id                              = "subnet-0e6026e6dbf7ce097" -> null
+      - map_customer_owned_ip_on_launch = false -> null
+      - map_public_ip_on_launch         = true -> null
+      - owner_id                        = "240195868935" -> null
+      - tags                            = {
+          - "Attributes"                                = "public"
+          - "Name"                                      = "demo-dev-c1-public-use2a"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "public"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/elb"                    = "1"
+        } -> null
+      - tags_all                        = {
+          - "Attributes"                                = "public"
+          - "Name"                                      = "demo-dev-c1-public-use2a"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "public"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/elb"                    = "1"
+        } -> null
+      - vpc_id                          = "vpc-0ff38cbab2009f223" -> null
+    }
+  # module.subnets.aws_subnet.public[1] has been deleted
+  - resource "aws_subnet" "public" {
+      - arn                             = "arn:aws:ec2:us-east-2:240195868935:subnet/subnet-08066bcdc049c1bd4" -> null
+      - assign_ipv6_address_on_creation = false -> null
+      - availability_zone               = "us-east-2b" -> null
+      - availability_zone_id            = "use2-az2" -> null
+      - cidr_block                      = "172.16.128.0/19" -> null
+      - id                              = "subnet-08066bcdc049c1bd4" -> null
+      - map_customer_owned_ip_on_launch = false -> null
+      - map_public_ip_on_launch         = true -> null
+      - owner_id                        = "240195868935" -> null
+      - tags                            = {
+          - "Attributes"                                = "public"
+          - "Name"                                      = "demo-dev-c1-public-use2b"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "public"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/elb"                    = "1"
+        } -> null
+      - tags_all                        = {
+          - "Attributes"                                = "public"
+          - "Name"                                      = "demo-dev-c1-public-use2b"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "public"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/elb"                    = "1"
+        } -> null
+      - vpc_id                          = "vpc-0ff38cbab2009f223" -> null
+    }
+  # module.subnets.aws_network_acl.private[0] has been deleted
+  - resource "aws_network_acl" "private" {
+      - arn        = "arn:aws:ec2:us-east-2:240195868935:network-acl/acl-068d84be94c869397" -> null
+      - egress     = [
+          - {
+              - action          = "allow"
+              - cidr_block      = "0.0.0.0/0"
+              - from_port       = 0
+              - icmp_code       = 0
+              - icmp_type       = 0
+              - ipv6_cidr_block = ""
+              - protocol        = "-1"
+              - rule_no         = 100
+              - to_port         = 0
+            },
+        ] -> null
+      - id         = "acl-068d84be94c869397" -> null
+      - ingress    = [
+          - {
+              - action          = "allow"
+              - cidr_block      = "0.0.0.0/0"
+              - from_port       = 0
+              - icmp_code       = 0
+              - icmp_type       = 0
+              - ipv6_cidr_block = ""
+              - protocol        = "-1"
+              - rule_no         = 100
+              - to_port         = 0
+            },
+        ] -> null
+      - owner_id   = "240195868935" -> null
+      - subnet_ids = [
+          - "subnet-00cd4ba041831290c",
+          - "subnet-0b6f7b34e7c9b5b40",
+        ] -> null
+      - tags       = {
+          - "Attributes"                                = "private"
+          - "Name"                                      = "demo-dev-c1-private"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "private"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/internal-elb"           = "1"
+        } -> null
+      - tags_all   = {
+          - "Attributes"                                = "private"
+          - "Name"                                      = "demo-dev-c1-private"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "private"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/internal-elb"           = "1"
+        } -> null
+      - vpc_id     = "vpc-0ff38cbab2009f223" -> null
+    }
+  # module.subnets.aws_route.public[0] has been deleted
+  - resource "aws_route" "public" {
+      - destination_cidr_block = "0.0.0.0/0" -> null
+      - gateway_id             = "igw-012e34af5dddf09c0" -> null
+      - id                     = "r-rtb-026bdfad2e3a887721080289494" -> null
+      - origin                 = "CreateRoute" -> null
+      - route_table_id         = "rtb-026bdfad2e3a88772" -> null
+      - state                  = "active" -> null
+
+      - timeouts {
+          - create = "2m" -> null
+          - delete = "5m" -> null
+        }
+    }
+  # module.subnets.aws_route_table_association.private[0] has been deleted
+  - resource "aws_route_table_association" "private" {
+      - id             = "rtbassoc-07018a8e900c468e3" -> null
+      - route_table_id = "rtb-03f7a09055f5df515" -> null
+      - subnet_id      = "subnet-00cd4ba041831290c" -> null
+    }
+  # module.subnets.aws_route_table_association.private[1] has been deleted
+  - resource "aws_route_table_association" "private" {
+      - id             = "rtbassoc-0050517f81cb82544" -> null
+      - route_table_id = "rtb-006bb61a9c33cd282" -> null
+      - subnet_id      = "subnet-0b6f7b34e7c9b5b40" -> null
+    }
+  # module.subnets.aws_route_table_association.public[0] has been deleted
+  - resource "aws_route_table_association" "public" {
+      - id             = "rtbassoc-08f3456cc9bffac2f" -> null
+      - route_table_id = "rtb-026bdfad2e3a88772" -> null
+      - subnet_id      = "subnet-0e6026e6dbf7ce097" -> null
+    }
+  # module.subnets.aws_route_table_association.public[1] has been deleted
+  - resource "aws_route_table_association" "public" {
+      - id             = "rtbassoc-057c03a0146d2d9e8" -> null
+      - route_table_id = "rtb-026bdfad2e3a88772" -> null
+      - subnet_id      = "subnet-08066bcdc049c1bd4" -> null
+    }
+  # module.subnets.aws_network_acl.public[0] has been deleted
+  - resource "aws_network_acl" "public" {
+      - arn        = "arn:aws:ec2:us-east-2:240195868935:network-acl/acl-0ce18684b6d52990d" -> null
+      - egress     = [
+          - {
+              - action          = "allow"
+              - cidr_block      = "0.0.0.0/0"
+              - from_port       = 0
+              - icmp_code       = 0
+              - icmp_type       = 0
+              - ipv6_cidr_block = ""
+              - protocol        = "-1"
+              - rule_no         = 100
+              - to_port         = 0
+            },
+        ] -> null
+      - id         = "acl-0ce18684b6d52990d" -> null
+      - ingress    = [
+          - {
+              - action          = "allow"
+              - cidr_block      = "0.0.0.0/0"
+              - from_port       = 0
+              - icmp_code       = 0
+              - icmp_type       = 0
+              - ipv6_cidr_block = ""
+              - protocol        = "-1"
+              - rule_no         = 100
+              - to_port         = 0
+            },
+        ] -> null
+      - owner_id   = "240195868935" -> null
+      - subnet_ids = [
+          - "subnet-08066bcdc049c1bd4",
+          - "subnet-0e6026e6dbf7ce097",
+        ] -> null
+      - tags       = {
+          - "Attributes"                                = "public"
+          - "Name"                                      = "demo-dev-c1-public"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "public"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/elb"                    = "1"
+        } -> null
+      - tags_all   = {
+          - "Attributes"                                = "public"
+          - "Name"                                      = "demo-dev-c1-public"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "public"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/elb"                    = "1"
+        } -> null
+      - vpc_id     = "vpc-0ff38cbab2009f223" -> null
+    }
+  # module.subnets.aws_route_table.private[0] has been deleted
+  - resource "aws_route_table" "private" {
+      - arn              = "arn:aws:ec2:us-east-2:240195868935:route-table/rtb-03f7a09055f5df515" -> null
+      - id               = "rtb-03f7a09055f5df515" -> null
+      - owner_id         = "240195868935" -> null
+      - propagating_vgws = [] -> null
+      - route            = [] -> null
+      - tags             = {
+          - "Attributes"                                = "private"
+          - "Name"                                      = "demo-dev-c1-private-use2a"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "private"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/internal-elb"           = "1"
+        } -> null
+      - tags_all         = {
+          - "Attributes"                                = "private"
+          - "Name"                                      = "demo-dev-c1-private-use2a"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "private"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/internal-elb"           = "1"
+        } -> null
+      - vpc_id           = "vpc-0ff38cbab2009f223" -> null
+    }
+  # module.subnets.aws_route_table.private[1] has been deleted
+  - resource "aws_route_table" "private" {
+      - arn              = "arn:aws:ec2:us-east-2:240195868935:route-table/rtb-006bb61a9c33cd282" -> null
+      - id               = "rtb-006bb61a9c33cd282" -> null
+      - owner_id         = "240195868935" -> null
+      - propagating_vgws = [] -> null
+      - route            = [] -> null
+      - tags             = {
+          - "Attributes"                                = "private"
+          - "Name"                                      = "demo-dev-c1-private-use2b"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "private"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/internal-elb"           = "1"
+        } -> null
+      - tags_all         = {
+          - "Attributes"                                = "private"
+          - "Name"                                      = "demo-dev-c1-private-use2b"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "private"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/internal-elb"           = "1"
+        } -> null
+      - vpc_id           = "vpc-0ff38cbab2009f223" -> null
+    }
+  # module.subnets.aws_route_table.public[0] has been deleted
+  - resource "aws_route_table" "public" {
+      - arn              = "arn:aws:ec2:us-east-2:240195868935:route-table/rtb-026bdfad2e3a88772" -> null
+      - id               = "rtb-026bdfad2e3a88772" -> null
+      - owner_id         = "240195868935" -> null
+      - propagating_vgws = [] -> null
+      - route            = [
+          - {
+              - carrier_gateway_id         = ""
+              - cidr_block                 = "0.0.0.0/0"
+              - destination_prefix_list_id = ""
+              - egress_only_gateway_id     = ""
+              - gateway_id                 = "igw-012e34af5dddf09c0"
+              - instance_id                = ""
+              - ipv6_cidr_block            = ""
+              - local_gateway_id           = ""
+              - nat_gateway_id             = ""
+              - network_interface_id       = ""
+              - transit_gateway_id         = ""
+              - vpc_endpoint_id            = ""
+              - vpc_peering_connection_id  = ""
+            },
+        ] -> null
+      - tags             = {
+          - "Attributes"                                = "public"
+          - "Name"                                      = "demo-dev-c1-public"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "public"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/elb"                    = "1"
+        } -> null
+      - tags_all         = {
+          - "Attributes"                                = "public"
+          - "Name"                                      = "demo-dev-c1-public"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "public"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/elb"                    = "1"
+        } -> null
+      - vpc_id           = "vpc-0ff38cbab2009f223" -> null
+    }
+  # module.subnets.aws_subnet.private[0] has been deleted
+  - resource "aws_subnet" "private" {
+      - arn                             = "arn:aws:ec2:us-east-2:240195868935:subnet/subnet-00cd4ba041831290c" -> null
+      - assign_ipv6_address_on_creation = false -> null
+      - availability_zone               = "us-east-2a" -> null
+      - availability_zone_id            = "use2-az1" -> null
+      - cidr_block                      = "172.16.0.0/19" -> null
+      - id                              = "subnet-00cd4ba041831290c" -> null
+      - map_customer_owned_ip_on_launch = false -> null
+      - map_public_ip_on_launch         = false -> null
+      - owner_id                        = "240195868935" -> null
+      - tags                            = {
+          - "Attributes"                                = "private"
+          - "Name"                                      = "demo-dev-c1-private-use2a"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "private"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/internal-elb"           = "1"
+        } -> null
+      - tags_all                        = {
+          - "Attributes"                                = "private"
+          - "Name"                                      = "demo-dev-c1-private-use2a"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "private"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/internal-elb"           = "1"
+        } -> null
+      - vpc_id                          = "vpc-0ff38cbab2009f223" -> null
+    }
+  # module.subnets.aws_subnet.private[1] has been deleted
+  - resource "aws_subnet" "private" {
+      - arn                             = "arn:aws:ec2:us-east-2:240195868935:subnet/subnet-0b6f7b34e7c9b5b40" -> null
+      - assign_ipv6_address_on_creation = false -> null
+      - availability_zone               = "us-east-2b" -> null
+      - availability_zone_id            = "use2-az2" -> null
+      - cidr_block                      = "172.16.32.0/19" -> null
+      - id                              = "subnet-0b6f7b34e7c9b5b40" -> null
+      - map_customer_owned_ip_on_launch = false -> null
+      - map_public_ip_on_launch         = false -> null
+      - owner_id                        = "240195868935" -> null
+      - tags                            = {
+          - "Attributes"                                = "private"
+          - "Name"                                      = "demo-dev-c1-private-use2b"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "private"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/internal-elb"           = "1"
+        } -> null
+      - tags_all                        = {
+          - "Attributes"                                = "private"
+          - "Name"                                      = "demo-dev-c1-private-use2b"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "cpco.io/subnet/type"                       = "private"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          - "kubernetes.io/role/internal-elb"           = "1"
+        } -> null
+      - vpc_id                          = "vpc-0ff38cbab2009f223" -> null
+    }
+
+Unless you have made equivalent changes to your configuration, or ignored the
+relevant attributes using ignore_changes, the following plan may include
+actions to undo or respond to these changes.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # module.alb.aws_lb.default[0] will be created
+  + resource "aws_lb" "default" {
+      + arn                        = (known after apply)
+      + arn_suffix                 = (known after apply)
+      + desync_mitigation_mode     = "defensive"
+      + dns_name                   = (known after apply)
+      + drop_invalid_header_fields = false
+      + enable_deletion_protection = false
+      + enable_http2               = true
+      + enable_waf_fail_open       = false
+      + id                         = (known after apply)
+      + idle_timeout               = 60
+      + internal                   = false
+      + ip_address_type            = "ipv4"
+      + load_balancer_type         = "application"
+      + name                       = "demo-dev-c1"
+      + security_groups            = (known after apply)
+      + subnets                    = (known after apply)
+      + tags                       = {
+          + "Name"      = "demo-dev-c1"
+          + "Namespace" = "demo"
+          + "Stage"     = "dev"
+        }
+      + tags_all                   = {
+          + "Name"      = "demo-dev-c1"
+          + "Namespace" = "demo"
+          + "Stage"     = "dev"
+        }
+      + vpc_id                     = (known after apply)
+      + zone_id                    = (known after apply)
+
+      + access_logs {
+          + bucket  = (known after apply)
+          + enabled = true
+        }
+
+      + subnet_mapping {
+          + allocation_id        = (known after apply)
+          + ipv6_address         = (known after apply)
+          + outpost_id           = (known after apply)
+          + private_ipv4_address = (known after apply)
+          + subnet_id            = (known after apply)
+        }
+    }
+
+  # module.alb.aws_lb_listener.http_forward[0] will be created
+  + resource "aws_lb_listener" "http_forward" {
+      + arn               = (known after apply)
+      + id                = (known after apply)
+      + load_balancer_arn = (known after apply)
+      + port              = 80
+      + protocol          = "HTTP"
+      + ssl_policy        = (known after apply)
+      + tags_all          = (known after apply)
+
+      + default_action {
+          + order            = (known after apply)
+          + target_group_arn = (known after apply)
+          + type             = "forward"
+        }
+    }
+
+  # module.alb.aws_lb_target_group.default[0] will be created
+  + resource "aws_lb_target_group" "default" {
+      + arn                                = (known after apply)
+      + arn_suffix                         = (known after apply)
+      + connection_termination             = false
+      + deregistration_delay               = "15"
+      + id                                 = (known after apply)
+      + lambda_multi_value_headers_enabled = false
+      + load_balancing_algorithm_type      = (known after apply)
+      + name                               = "demo-dev-c1-default"
+      + port                               = 80
+      + preserve_client_ip                 = (known after apply)
+      + protocol                           = "HTTP"
+      + protocol_version                   = (known after apply)
+      + proxy_protocol_v2                  = false
+      + slow_start                         = 0
+      + tags                               = {
+          + "Attributes" = "default"
+          + "Name"       = "demo-dev-c1-default"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + tags_all                           = {
+          + "Attributes" = "default"
+          + "Name"       = "demo-dev-c1-default"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + target_type                        = "ip"
+      + vpc_id                             = (known after apply)
+
+      + health_check {
+          + enabled             = true
+          + healthy_threshold   = 2
+          + interval            = 15
+          + matcher             = "200-399"
+          + path                = "/"
+          + port                = "traffic-port"
+          + protocol            = "HTTP"
+          + timeout             = 10
+          + unhealthy_threshold = 2
+        }
+
+      + stickiness {
+          + cookie_duration = 60
+          + enabled         = true
+          + type            = "lb_cookie"
+        }
+    }
+
+  # module.alb.aws_security_group.default[0] will be created
+  + resource "aws_security_group" "default" {
+      + arn                    = (known after apply)
+      + description            = "Controls access to the ALB (HTTP/HTTPS)"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = "demo-dev-c1"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Name"      = "demo-dev-c1"
+          + "Namespace" = "demo"
+          + "Stage"     = "dev"
+        }
+      + tags_all               = {
+          + "Name"      = "demo-dev-c1"
+          + "Namespace" = "demo"
+          + "Stage"     = "dev"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.alb.aws_security_group_rule.egress[0] will be created
+  + resource "aws_security_group_rule" "egress" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + from_port                = 0
+      + id                       = (known after apply)
+      + protocol                 = "-1"
+      + security_group_id        = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 0
+      + type                     = "egress"
+    }
+
+  # module.alb.aws_security_group_rule.http_ingress[0] will be created
+  + resource "aws_security_group_rule" "http_ingress" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + from_port                = 80
+      + id                       = (known after apply)
+      + prefix_list_ids          = []
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 80
+      + type                     = "ingress"
+    }
+
+  # module.eks_cluster.data.aws_eks_cluster_auth.eks[0] will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_eks_cluster_auth" "eks"  {
+      + id    = (known after apply)
+      + name  = (known after apply)
+      + token = (sensitive value)
+    }
+
+  # module.eks_cluster.data.tls_certificate.cluster[0] will be read during apply
+  # (config refers to values not yet known)
+ <= data "tls_certificate" "cluster"  {
+      + certificates = (known after apply)
+      + id           = (known after apply)
+      + url          = (known after apply)
+    }
+
+  # module.eks_cluster.aws_cloudwatch_log_group.default[0] will be created
+  + resource "aws_cloudwatch_log_group" "default" {
+      + arn               = (known after apply)
+      + id                = (known after apply)
+      + name              = "/aws/eks/demo-dev-c1-cluster/cluster"
+      + retention_in_days = 7
+      + tags              = {
+          + "Attributes" = "cluster"
+          + "Name"       = "demo-dev-c1-cluster"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + tags_all          = {
+          + "Attributes" = "cluster"
+          + "Name"       = "demo-dev-c1-cluster"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+    }
+
+  # module.eks_cluster.aws_eks_addon.cluster["vpc-cni"] will be created
+  + resource "aws_eks_addon" "cluster" {
+      + addon_name        = "vpc-cni"
+      + addon_version     = (known after apply)
+      + arn               = (known after apply)
+      + cluster_name      = "demo-dev-c1-cluster"
+      + created_at        = (known after apply)
+      + id                = (known after apply)
+      + modified_at       = (known after apply)
+      + resolve_conflicts = "NONE"
+      + tags              = {
+          + "Attributes" = "cluster"
+          + "Name"       = "demo-dev-c1-cluster"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + tags_all          = {
+          + "Attributes" = "cluster"
+          + "Name"       = "demo-dev-c1-cluster"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+    }
+
+  # module.eks_cluster.aws_eks_cluster.default[0] will be created
+  + resource "aws_eks_cluster" "default" {
+      + arn                       = (known after apply)
+      + certificate_authority     = (known after apply)
+      + created_at                = (known after apply)
+      + enabled_cluster_log_types = [
+          + "audit",
+        ]
+      + endpoint                  = (known after apply)
+      + id                        = (known after apply)
+      + identity                  = (known after apply)
+      + name                      = "demo-dev-c1-cluster"
+      + platform_version          = (known after apply)
+      + role_arn                  = (known after apply)
+      + status                    = (known after apply)
+      + tags                      = {
+          + "Attributes" = "cluster"
+          + "Name"       = "demo-dev-c1-cluster"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + tags_all                  = {
+          + "Attributes" = "cluster"
+          + "Name"       = "demo-dev-c1-cluster"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + version                   = "1.21"
+
+      + encryption_config {
+          + resources = [
+              + "secrets",
+            ]
+
+          + provider {
+              + key_arn = "arn:aws:kms:us-east-2:240195868935:key/3fad647b-db99-4b5e-bdb7-9f2d78410077"
+            }
+        }
+
+      + kubernetes_network_config {
+          + service_ipv4_cidr = (known after apply)
+        }
+
+      + vpc_config {
+          + cluster_security_group_id = (known after apply)
+          + endpoint_private_access   = false
+          + endpoint_public_access    = true
+          + public_access_cidrs       = [
+              + "0.0.0.0/0",
+            ]
+          + security_group_ids        = (known after apply)
+          + subnet_ids                = (known after apply)
+          + vpc_id                    = (known after apply)
+        }
+    }
+
+  # module.eks_cluster.aws_iam_openid_connect_provider.default[0] will be created
+  + resource "aws_iam_openid_connect_provider" "default" {
+      + arn             = (known after apply)
+      + client_id_list  = [
+          + "sts.amazonaws.com",
+        ]
+      + id              = (known after apply)
+      + tags            = {
+          + "Attributes" = "cluster"
+          + "Name"       = "demo-dev-c1-cluster"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + tags_all        = {
+          + "Attributes" = "cluster"
+          + "Name"       = "demo-dev-c1-cluster"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + thumbprint_list = (known after apply)
+      + url             = (known after apply)
+    }
+
+  # module.eks_cluster.aws_iam_policy.cluster_elb_service_role[0] will be created
+  + resource "aws_iam_policy" "cluster_elb_service_role" {
+      + arn       = (known after apply)
+      + id        = (known after apply)
+      + name      = "demo-dev-c1-cluster-ServiceRole"
+      + path      = "/"
+      + policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action   = [
+                          + "elasticloadbalancing:SetSubnets",
+                          + "elasticloadbalancing:SetIpAddressType",
+                          + "ec2:DescribeInternetGateways",
+                          + "ec2:DescribeAddresses",
+                          + "ec2:DescribeAccountAttributes",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                      + Sid      = "AllowElasticLoadBalancer"
+                    },
+                  + {
+                      + Action   = "logs:CreateLogGroup"
+                      + Effect   = "Deny"
+                      + Resource = "*"
+                      + Sid      = "DenyCreateLogGroup"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + policy_id = (known after apply)
+      + tags_all  = (known after apply)
+    }
+
+  # module.eks_cluster.aws_iam_role.default[0] will be created
+  + resource "aws_iam_role" "default" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "eks.amazonaws.com"
+                        }
+                      + Sid       = ""
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "demo-dev-c1-cluster"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags                  = {
+          + "Attributes" = "cluster"
+          + "Name"       = "demo-dev-c1-cluster"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + tags_all              = {
+          + "Attributes" = "cluster"
+          + "Name"       = "demo-dev-c1-cluster"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy {
+          + name   = (known after apply)
+          + policy = (known after apply)
+        }
+    }
+
+  # module.eks_cluster.aws_iam_role_policy_attachment.amazon_eks_cluster_policy[0] will be created
+  + resource "aws_iam_role_policy_attachment" "amazon_eks_cluster_policy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+      + role       = "demo-dev-c1-cluster"
+    }
+
+  # module.eks_cluster.aws_iam_role_policy_attachment.amazon_eks_service_policy[0] will be created
+  + resource "aws_iam_role_policy_attachment" "amazon_eks_service_policy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+      + role       = "demo-dev-c1-cluster"
+    }
+
+  # module.eks_cluster.aws_iam_role_policy_attachment.cluster_elb_service_role[0] will be created
+  + resource "aws_iam_role_policy_attachment" "cluster_elb_service_role" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = "demo-dev-c1-cluster"
+    }
+
+  # module.eks_cluster.kubernetes_config_map.aws_auth_ignore_changes[0] will be created
+  + resource "kubernetes_config_map" "aws_auth_ignore_changes" {
+      + data = {
+          + "mapAccounts" = jsonencode([])
+          + "mapRoles"    = jsonencode([])
+          + "mapUsers"    = jsonencode([])
+        }
+      + id   = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "aws-auth"
+          + namespace        = "kube-system"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+  # module.eks_cluster.null_resource.wait_for_cluster[0] will be created
+  + resource "null_resource" "wait_for_cluster" {
+      + id = (known after apply)
+    }
+
+  # module.eks_node_group.aws_eks_node_group.default[0] will be created
+  + resource "aws_eks_node_group" "default" {
+      + ami_type               = "AL2_x86_64"
+      + arn                    = (known after apply)
+      + capacity_type          = (known after apply)
+      + cluster_name           = (known after apply)
+      + disk_size              = (known after apply)
+      + id                     = (known after apply)
+      + instance_types         = [
+          + "t2.micro",
+        ]
+      + node_group_name        = "demo-dev-c1-workers"
+      + node_group_name_prefix = (known after apply)
+      + node_role_arn          = (known after apply)
+      + release_version        = (known after apply)
+      + resources              = (known after apply)
+      + status                 = (known after apply)
+      + subnet_ids             = (known after apply)
+      + tags                   = (known after apply)
+      + tags_all               = (known after apply)
+      + version                = (known after apply)
+
+      + launch_template {
+          + id      = (known after apply)
+          + name    = (known after apply)
+          + version = (known after apply)
+        }
+
+      + scaling_config {
+          + desired_size = 2
+          + max_size     = 3
+          + min_size     = 2
+        }
+
+      + update_config {
+          + max_unavailable            = (known after apply)
+          + max_unavailable_percentage = (known after apply)
+        }
+    }
+
+  # module.eks_node_group.aws_iam_role.default[0] will be created
+  + resource "aws_iam_role" "default" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "ec2.amazonaws.com"
+                        }
+                      + Sid       = ""
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "demo-dev-c1-workers"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + tags                  = {
+          + "Attributes" = "workers"
+          + "Name"       = "demo-dev-c1-workers"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + tags_all              = {
+          + "Attributes" = "workers"
+          + "Name"       = "demo-dev-c1-workers"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy {
+          + name   = (known after apply)
+          + policy = (known after apply)
+        }
+    }
+
+  # module.eks_node_group.aws_iam_role_policy_attachment.amazon_ec2_container_registry_read_only[0] will be created
+  + resource "aws_iam_role_policy_attachment" "amazon_ec2_container_registry_read_only" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+      + role       = "demo-dev-c1-workers"
+    }
+
+  # module.eks_node_group.aws_iam_role_policy_attachment.amazon_eks_cni_policy[0] will be created
+  + resource "aws_iam_role_policy_attachment" "amazon_eks_cni_policy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+      + role       = "demo-dev-c1-workers"
+    }
+
+  # module.eks_node_group.aws_iam_role_policy_attachment.amazon_eks_worker_node_policy[0] will be created
+  + resource "aws_iam_role_policy_attachment" "amazon_eks_worker_node_policy" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+      + role       = "demo-dev-c1-workers"
+    }
+
+  # module.eks_node_group.aws_launch_template.default[0] will be created
+  + resource "aws_launch_template" "default" {
+      + arn                    = (known after apply)
+      + default_version        = (known after apply)
+      + id                     = (known after apply)
+      + latest_version         = (known after apply)
+      + name                   = (known after apply)
+      + name_prefix            = "demo-dev-c1-workers"
+      + tags                   = (known after apply)
+      + tags_all               = (known after apply)
+      + update_default_version = true
+
+      + block_device_mappings {
+          + device_name = "/dev/xvda"
+
+          + ebs {
+              + delete_on_termination = "true"
+              + encrypted             = "true"
+              + iops                  = (known after apply)
+              + throughput            = (known after apply)
+              + volume_size           = 20
+              + volume_type           = "gp2"
+            }
+        }
+
+      + metadata_options {
+          + http_endpoint               = "enabled"
+          + http_protocol_ipv6          = "disabled"
+          + http_put_response_hop_limit = 2
+          + http_tokens                 = "required"
+        }
+    }
+
+  # module.subnets.data.aws_vpc.default[0] will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_vpc" "default"  {
+      ~ arn                     = "arn:aws:ec2:us-east-2:240195868935:vpc/vpc-0ff38cbab2009f223" -> (known after apply)
+      ~ cidr_block              = "172.16.0.0/16" -> (known after apply)
+      ~ cidr_block_associations = [
+          - {
+              - association_id = "vpc-cidr-assoc-0b8ae21cfeb3c7fd5"
+              - cidr_block     = "172.16.0.0/16"
+              - state          = "associated"
+            },
+        ] -> (known after apply)
+      ~ default                 = false -> (known after apply)
+      ~ dhcp_options_id         = "dopt-e190378a" -> (known after apply)
+      ~ enable_dns_hostnames    = true -> (known after apply)
+      ~ enable_dns_support      = true -> (known after apply)
+      ~ id                      = "vpc-0ff38cbab2009f223" -> (known after apply)
+      ~ instance_tenancy        = "default" -> (known after apply)
+      ~ ipv6_association_id     = "vpc-cidr-assoc-03afc624c52c1ba3c" -> (known after apply)
+      ~ ipv6_cidr_block         = "2600:1f16:8a7:df00::/56" -> (known after apply)
+      ~ main_route_table_id     = "rtb-00e66c18b318b14ff" -> (known after apply)
+      ~ owner_id                = "240195868935" -> (known after apply)
+      ~ state                   = "available" -> (known after apply)
+      ~ tags                    = {
+          - "Name"                                      = "demo-dev-c1"
+          - "Namespace"                                 = "demo"
+          - "Stage"                                     = "dev"
+          - "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        } -> (known after apply)
+    }
+
+  # module.subnets.aws_eip.default[1] will be created
+  + resource "aws_eip" "default" {
+      + allocation_id        = (known after apply)
+      + association_id       = (known after apply)
+      + carrier_ip           = (known after apply)
+      + customer_owned_ip    = (known after apply)
+      + domain               = (known after apply)
+      + id                   = (known after apply)
+      + instance             = (known after apply)
+      + network_border_group = (known after apply)
+      + network_interface    = (known after apply)
+      + private_dns          = (known after apply)
+      + private_ip           = (known after apply)
+      + public_dns           = (known after apply)
+      + public_ip            = (known after apply)
+      + public_ipv4_pool     = (known after apply)
+      + tags                 = {
+          + "Attributes"                                = "private"
+          + "Name"                                      = "demo-dev-c1-private-use2b"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "private"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/internal-elb"           = "1"
+        }
+      + tags_all             = {
+          + "Attributes"                                = "private"
+          + "Name"                                      = "demo-dev-c1-private-use2b"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "private"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/internal-elb"           = "1"
+        }
+      + vpc                  = true
+    }
+
+  # module.subnets.aws_nat_gateway.default[0] will be created
+  + resource "aws_nat_gateway" "default" {
+      + allocation_id        = "eipalloc-029979faa199a9ccd"
+      + connectivity_type    = "public"
+      + id                   = (known after apply)
+      + network_interface_id = (known after apply)
+      + private_ip           = (known after apply)
+      + public_ip            = (known after apply)
+      + subnet_id            = (known after apply)
+      + tags                 = {
+          + "Attributes"                                = "nat"
+          + "Name"                                      = "demo-dev-c1-nat-use2a"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        }
+      + tags_all             = {
+          + "Attributes"                                = "nat"
+          + "Name"                                      = "demo-dev-c1-nat-use2a"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        }
+    }
+
+  # module.subnets.aws_nat_gateway.default[1] will be created
+  + resource "aws_nat_gateway" "default" {
+      + allocation_id        = (known after apply)
+      + connectivity_type    = "public"
+      + id                   = (known after apply)
+      + network_interface_id = (known after apply)
+      + private_ip           = (known after apply)
+      + public_ip            = (known after apply)
+      + subnet_id            = (known after apply)
+      + tags                 = {
+          + "Attributes"                                = "nat"
+          + "Name"                                      = "demo-dev-c1-nat-use2b"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        }
+      + tags_all             = {
+          + "Attributes"                                = "nat"
+          + "Name"                                      = "demo-dev-c1-nat-use2b"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        }
+    }
+
+  # module.subnets.aws_network_acl.private[0] will be created
+  + resource "aws_network_acl" "private" {
+      + arn        = (known after apply)
+      + egress     = [
+          + {
+              + action          = "allow"
+              + cidr_block      = "0.0.0.0/0"
+              + from_port       = 0
+              + icmp_code       = null
+              + icmp_type       = null
+              + ipv6_cidr_block = ""
+              + protocol        = "-1"
+              + rule_no         = 100
+              + to_port         = 0
+            },
+        ]
+      + id         = (known after apply)
+      + ingress    = [
+          + {
+              + action          = "allow"
+              + cidr_block      = "0.0.0.0/0"
+              + from_port       = 0
+              + icmp_code       = null
+              + icmp_type       = null
+              + ipv6_cidr_block = ""
+              + protocol        = "-1"
+              + rule_no         = 100
+              + to_port         = 0
+            },
+        ]
+      + owner_id   = (known after apply)
+      + subnet_ids = (known after apply)
+      + tags       = {
+          + "Attributes"                                = "private"
+          + "Name"                                      = "demo-dev-c1-private"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "private"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/internal-elb"           = "1"
+        }
+      + tags_all   = {
+          + "Attributes"                                = "private"
+          + "Name"                                      = "demo-dev-c1-private"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "private"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/internal-elb"           = "1"
+        }
+      + vpc_id     = (known after apply)
+    }
+
+  # module.subnets.aws_network_acl.public[0] will be created
+  + resource "aws_network_acl" "public" {
+      + arn        = (known after apply)
+      + egress     = [
+          + {
+              + action          = "allow"
+              + cidr_block      = "0.0.0.0/0"
+              + from_port       = 0
+              + icmp_code       = null
+              + icmp_type       = null
+              + ipv6_cidr_block = ""
+              + protocol        = "-1"
+              + rule_no         = 100
+              + to_port         = 0
+            },
+        ]
+      + id         = (known after apply)
+      + ingress    = [
+          + {
+              + action          = "allow"
+              + cidr_block      = "0.0.0.0/0"
+              + from_port       = 0
+              + icmp_code       = null
+              + icmp_type       = null
+              + ipv6_cidr_block = ""
+              + protocol        = "-1"
+              + rule_no         = 100
+              + to_port         = 0
+            },
+        ]
+      + owner_id   = (known after apply)
+      + subnet_ids = (known after apply)
+      + tags       = {
+          + "Attributes"                                = "public"
+          + "Name"                                      = "demo-dev-c1-public"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "public"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/elb"                    = "1"
+        }
+      + tags_all   = {
+          + "Attributes"                                = "public"
+          + "Name"                                      = "demo-dev-c1-public"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "public"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/elb"                    = "1"
+        }
+      + vpc_id     = (known after apply)
+    }
+
+  # module.subnets.aws_route.default[0] will be created
+  + resource "aws_route" "default" {
+      + destination_cidr_block = "0.0.0.0/0"
+      + id                     = (known after apply)
+      + instance_id            = (known after apply)
+      + instance_owner_id      = (known after apply)
+      + nat_gateway_id         = (known after apply)
+      + network_interface_id   = (known after apply)
+      + origin                 = (known after apply)
+      + route_table_id         = (known after apply)
+      + state                  = (known after apply)
+
+      + timeouts {
+          + create = "2m"
+          + delete = "5m"
+        }
+    }
+
+  # module.subnets.aws_route.default[1] will be created
+  + resource "aws_route" "default" {
+      + destination_cidr_block = "0.0.0.0/0"
+      + id                     = (known after apply)
+      + instance_id            = (known after apply)
+      + instance_owner_id      = (known after apply)
+      + nat_gateway_id         = (known after apply)
+      + network_interface_id   = (known after apply)
+      + origin                 = (known after apply)
+      + route_table_id         = (known after apply)
+      + state                  = (known after apply)
+
+      + timeouts {
+          + create = "2m"
+          + delete = "5m"
+        }
+    }
+
+  # module.subnets.aws_route.public[0] will be created
+  + resource "aws_route" "public" {
+      + destination_cidr_block = "0.0.0.0/0"
+      + gateway_id             = (known after apply)
+      + id                     = (known after apply)
+      + instance_id            = (known after apply)
+      + instance_owner_id      = (known after apply)
+      + network_interface_id   = (known after apply)
+      + origin                 = (known after apply)
+      + route_table_id         = (known after apply)
+      + state                  = (known after apply)
+
+      + timeouts {
+          + create = "2m"
+          + delete = "5m"
+        }
+    }
+
+  # module.subnets.aws_route_table.private[0] will be created
+  + resource "aws_route_table" "private" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + route            = (known after apply)
+      + tags             = {
+          + "Attributes"                                = "private"
+          + "Name"                                      = "demo-dev-c1-private-use2a"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "private"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/internal-elb"           = "1"
+        }
+      + tags_all         = {
+          + "Attributes"                                = "private"
+          + "Name"                                      = "demo-dev-c1-private-use2a"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "private"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/internal-elb"           = "1"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # module.subnets.aws_route_table.private[1] will be created
+  + resource "aws_route_table" "private" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + route            = (known after apply)
+      + tags             = {
+          + "Attributes"                                = "private"
+          + "Name"                                      = "demo-dev-c1-private-use2b"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "private"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/internal-elb"           = "1"
+        }
+      + tags_all         = {
+          + "Attributes"                                = "private"
+          + "Name"                                      = "demo-dev-c1-private-use2b"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "private"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/internal-elb"           = "1"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # module.subnets.aws_route_table.public[0] will be created
+  + resource "aws_route_table" "public" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + route            = (known after apply)
+      + tags             = {
+          + "Attributes"                                = "public"
+          + "Name"                                      = "demo-dev-c1-public"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "public"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/elb"                    = "1"
+        }
+      + tags_all         = {
+          + "Attributes"                                = "public"
+          + "Name"                                      = "demo-dev-c1-public"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "public"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/elb"                    = "1"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # module.subnets.aws_route_table_association.private[0] will be created
+  + resource "aws_route_table_association" "private" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.subnets.aws_route_table_association.private[1] will be created
+  + resource "aws_route_table_association" "private" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.subnets.aws_route_table_association.public[0] will be created
+  + resource "aws_route_table_association" "public" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.subnets.aws_route_table_association.public[1] will be created
+  + resource "aws_route_table_association" "public" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.subnets.aws_subnet.private[0] will be created
+  + resource "aws_subnet" "private" {
+      + arn                             = (known after apply)
+      + assign_ipv6_address_on_creation = false
+      + availability_zone               = "us-east-2a"
+      + availability_zone_id            = (known after apply)
+      + cidr_block                      = "172.16.0.0/19"
+      + id                              = (known after apply)
+      + ipv6_cidr_block_association_id  = (known after apply)
+      + map_public_ip_on_launch         = false
+      + owner_id                        = (known after apply)
+      + tags                            = {
+          + "Attributes"                                = "private"
+          + "Name"                                      = "demo-dev-c1-private-use2a"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "private"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/internal-elb"           = "1"
+        }
+      + tags_all                        = {
+          + "Attributes"                                = "private"
+          + "Name"                                      = "demo-dev-c1-private-use2a"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "private"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/internal-elb"           = "1"
+        }
+      + vpc_id                          = (known after apply)
+    }
+
+  # module.subnets.aws_subnet.private[1] will be created
+  + resource "aws_subnet" "private" {
+      + arn                             = (known after apply)
+      + assign_ipv6_address_on_creation = false
+      + availability_zone               = "us-east-2b"
+      + availability_zone_id            = (known after apply)
+      + cidr_block                      = "172.16.32.0/19"
+      + id                              = (known after apply)
+      + ipv6_cidr_block_association_id  = (known after apply)
+      + map_public_ip_on_launch         = false
+      + owner_id                        = (known after apply)
+      + tags                            = {
+          + "Attributes"                                = "private"
+          + "Name"                                      = "demo-dev-c1-private-use2b"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "private"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/internal-elb"           = "1"
+        }
+      + tags_all                        = {
+          + "Attributes"                                = "private"
+          + "Name"                                      = "demo-dev-c1-private-use2b"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "private"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/internal-elb"           = "1"
+        }
+      + vpc_id                          = (known after apply)
+    }
+
+  # module.subnets.aws_subnet.public[0] will be created
+  + resource "aws_subnet" "public" {
+      + arn                             = (known after apply)
+      + assign_ipv6_address_on_creation = false
+      + availability_zone               = "us-east-2a"
+      + availability_zone_id            = (known after apply)
+      + cidr_block                      = "172.16.96.0/19"
+      + id                              = (known after apply)
+      + ipv6_cidr_block_association_id  = (known after apply)
+      + map_public_ip_on_launch         = true
+      + owner_id                        = (known after apply)
+      + tags                            = {
+          + "Attributes"                                = "public"
+          + "Name"                                      = "demo-dev-c1-public-use2a"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "public"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/elb"                    = "1"
+        }
+      + tags_all                        = {
+          + "Attributes"                                = "public"
+          + "Name"                                      = "demo-dev-c1-public-use2a"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "public"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/elb"                    = "1"
+        }
+      + vpc_id                          = (known after apply)
+    }
+
+  # module.subnets.aws_subnet.public[1] will be created
+  + resource "aws_subnet" "public" {
+      + arn                             = (known after apply)
+      + assign_ipv6_address_on_creation = false
+      + availability_zone               = "us-east-2b"
+      + availability_zone_id            = (known after apply)
+      + cidr_block                      = "172.16.128.0/19"
+      + id                              = (known after apply)
+      + ipv6_cidr_block_association_id  = (known after apply)
+      + map_public_ip_on_launch         = true
+      + owner_id                        = (known after apply)
+      + tags                            = {
+          + "Attributes"                                = "public"
+          + "Name"                                      = "demo-dev-c1-public-use2b"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "public"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/elb"                    = "1"
+        }
+      + tags_all                        = {
+          + "Attributes"                                = "public"
+          + "Name"                                      = "demo-dev-c1-public-use2b"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "cpco.io/subnet/type"                       = "public"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+          + "kubernetes.io/role/elb"                    = "1"
+        }
+      + vpc_id                          = (known after apply)
+    }
+
+  # module.vpc.aws_default_security_group.default[0] will be created
+  + resource "aws_default_security_group" "default" {
+      + arn                    = (known after apply)
+      + description            = (known after apply)
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Name"                                      = "Default Security Group"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        }
+      + tags_all               = {
+          + "Name"                                      = "Default Security Group"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.vpc.aws_internet_gateway.default[0] will be created
+  + resource "aws_internet_gateway" "default" {
+      + arn      = (known after apply)
+      + id       = (known after apply)
+      + owner_id = (known after apply)
+      + tags     = {
+          + "Name"                                      = "demo-dev-c1"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        }
+      + tags_all = {
+          + "Name"                                      = "demo-dev-c1"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        }
+      + vpc_id   = (known after apply)
+    }
+
+  # module.vpc.aws_vpc.default[0] will be created
+  + resource "aws_vpc" "default" {
+      + arn                              = (known after apply)
+      + assign_generated_ipv6_cidr_block = true
+      + cidr_block                       = "172.16.0.0/16"
+      + default_network_acl_id           = (known after apply)
+      + default_route_table_id           = (known after apply)
+      + default_security_group_id        = (known after apply)
+      + dhcp_options_id                  = (known after apply)
+      + enable_classiclink               = false
+      + enable_classiclink_dns_support   = false
+      + enable_dns_hostnames             = true
+      + enable_dns_support               = true
+      + id                               = (known after apply)
+      + instance_tenancy                 = "default"
+      + ipv6_association_id              = (known after apply)
+      + ipv6_cidr_block                  = (known after apply)
+      + main_route_table_id              = (known after apply)
+      + owner_id                         = (known after apply)
+      + tags                             = {
+          + "Name"                                      = "demo-dev-c1"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        }
+      + tags_all                         = {
+          + "Name"                                      = "demo-dev-c1"
+          + "Namespace"                                 = "demo"
+          + "Stage"                                     = "dev"
+          + "kubernetes.io/cluster/demo-dev-c1-cluster" = "shared"
+        }
+    }
+
+  # module.eks_cluster.module.aws_security_group.aws_security_group.default[0] will be created
+  + resource "aws_security_group" "default" {
+      + arn                    = (known after apply)
+      + description            = "Security Group for EKS cluster"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = "demo-dev-c1-cluster"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Attributes" = "cluster"
+          + "Name"       = "demo-dev-c1-cluster"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + tags_all               = {
+          + "Attributes" = "cluster"
+          + "Name"       = "demo-dev-c1-cluster"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + vpc_id                 = (known after apply)
+
+      + timeouts {
+          + create = "10m"
+          + delete = "15m"
+        }
+    }
+
+  # module.eks_cluster.module.aws_security_group.aws_security_group_rule.keyed["_allow_all_egress_"] will be created
+  + resource "aws_security_group_rule" "keyed" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + description              = "Allow all egress"
+      + from_port                = 0
+      + id                       = (known after apply)
+      + ipv6_cidr_blocks         = [
+          + "::/0",
+        ]
+      + prefix_list_ids          = []
+      + protocol                 = "-1"
+      + security_group_id        = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 0
+      + type                     = "egress"
+    }
+
+  # module.alb.module.access_logs.module.s3_bucket.data.aws_iam_policy_document.aggregated_policy[0] will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_iam_policy_document" "aggregated_policy"  {
+      + id            = (known after apply)
+      + json          = (known after apply)
+      + override_json = (known after apply)
+      + source_json   = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "s3:PutObject"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + AWS = "arn:aws:iam::033677994240:root"
+                        }
+                      + Resource  = "arn:aws:s3:::demo-dev-c1-alb-access-logs/*"
+                      + Sid       = ""
+                    },
+                  + {
+                      + Action    = "s3:PutObject"
+                      + Condition = {
+                          + StringEquals = {
+                              + s3:x-amz-acl = "bucket-owner-full-control"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "delivery.logs.amazonaws.com"
+                        }
+                      + Resource  = "arn:aws:s3:::demo-dev-c1-alb-access-logs/*"
+                      + Sid       = ""
+                    },
+                  + {
+                      + Action    = "s3:GetBucketAcl"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "delivery.logs.amazonaws.com"
+                        }
+                      + Resource  = "arn:aws:s3:::demo-dev-c1-alb-access-logs"
+                      + Sid       = ""
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+    }
+
+  # module.alb.module.access_logs.module.s3_bucket.data.aws_iam_policy_document.bucket_policy[0] will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_iam_policy_document" "bucket_policy"  {
+      + id   = (known after apply)
+      + json = (known after apply)
+    }
+
+  # module.alb.module.access_logs.module.s3_bucket.aws_s3_bucket.default[0] will be created
+  + resource "aws_s3_bucket" "default" {
+      + acceleration_status         = (known after apply)
+      + acl                         = "log-delivery-write"
+      + arn                         = (known after apply)
+      + bucket                      = "demo-dev-c1-alb-access-logs"
+      + bucket_domain_name          = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = true
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + policy                      = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "s3:PutObject"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + AWS = "arn:aws:iam::033677994240:root"
+                        }
+                      + Resource  = "arn:aws:s3:::demo-dev-c1-alb-access-logs/*"
+                      + Sid       = ""
+                    },
+                  + {
+                      + Action    = "s3:PutObject"
+                      + Condition = {
+                          + StringEquals = {
+                              + s3:x-amz-acl = "bucket-owner-full-control"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "delivery.logs.amazonaws.com"
+                        }
+                      + Resource  = "arn:aws:s3:::demo-dev-c1-alb-access-logs/*"
+                      + Sid       = ""
+                    },
+                  + {
+                      + Action    = "s3:GetBucketAcl"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "delivery.logs.amazonaws.com"
+                        }
+                      + Resource  = "arn:aws:s3:::demo-dev-c1-alb-access-logs"
+                      + Sid       = ""
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags                        = {
+          + "Attributes" = "alb-access-logs"
+          + "Name"       = "demo-dev-c1-alb-access-logs"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + tags_all                    = {
+          + "Attributes" = "alb-access-logs"
+          + "Name"       = "demo-dev-c1-alb-access-logs"
+          + "Namespace"  = "demo"
+          + "Stage"      = "dev"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + lifecycle_rule {
+          + abort_incomplete_multipart_upload_days = 5
+          + enabled                                = false
+          + id                                     = "demo-dev-c1-alb-access-logs"
+
+          + expiration {
+              + days = 90
+            }
+
+          + noncurrent_version_expiration {
+              + days = 90
+            }
+
+          + noncurrent_version_transition {
+              + days          = 30
+              + storage_class = "GLACIER"
+            }
+
+          + transition {
+              + days          = 30
+              + storage_class = "STANDARD_IA"
+            }
+          + transition {
+              + days          = 60
+              + storage_class = "GLACIER"
+            }
+        }
+
+      + server_side_encryption_configuration {
+          + rule {
+              + apply_server_side_encryption_by_default {
+                  + sse_algorithm = "AES256"
+                }
+            }
+        }
+
+      + versioning {
+          + enabled    = true
+          + mfa_delete = false
+        }
+    }
+
+  # module.alb.module.access_logs.module.s3_bucket.aws_s3_bucket_policy.default[0] will be created
+  + resource "aws_s3_bucket_policy" "default" {
+      + bucket = (known after apply)
+      + id     = (known after apply)
+      + policy = (known after apply)
+    }
+
+  # module.alb.module.access_logs.module.s3_bucket.aws_s3_bucket_public_access_block.default[0] will be created
+  + resource "aws_s3_bucket_public_access_block" "default" {
+      + block_public_acls       = true
+      + block_public_policy     = true
+      + bucket                  = (known after apply)
+      + id                      = (known after apply)
+      + ignore_public_acls      = true
+      + restrict_public_buckets = true
+    }
+
+Plan: 50 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + access_logs_bucket_id                 = (known after apply)
+  + alb_arn                               = (known after apply)
+  + alb_arn_suffix                        = (known after apply)
+  + alb_dns_name                          = (known after apply)
+  + alb_zone_id                           = (known after apply)
+  + default_target_group_arn              = (known after apply)
+  + eks_cluster_arn                       = (known after apply)
+  + eks_cluster_endpoint                  = (known after apply)
+  + eks_cluster_id                        = (known after apply)
+  + eks_cluster_identity_oidc_issuer      = (known after apply)
+  + eks_cluster_managed_security_group_id = (known after apply)
+  ~ eks_cluster_security_group_arn        = "arn:aws:ec2:us-east-2:240195868935:security-group/sg-0f1105686f6976c18" -> (known after apply)
+  ~ eks_cluster_security_group_id         = "sg-0f1105686f6976c18" -> (known after apply)
+  + eks_node_group_arn                    = (known after apply)
+  + eks_node_group_id                     = (known after apply)
+  + eks_node_group_resources              = [
+      + (known after apply),
+    ]
+  + eks_node_group_role_arn               = (known after apply)
+  + eks_node_group_status                 = (known after apply)
+  + http_listener_arn                     = (known after apply)
+  + listener_arns                         = (known after apply)
+  ~ security_group_id                     = "sg-05a6c86409541ae42" -> (known after apply)
