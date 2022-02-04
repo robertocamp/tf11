@@ -1,7 +1,11 @@
 # tf11: AWS EKS cluster
 > AWS TF deployment based on:
 - https://github.com/cloudposse/terraform-aws-eks-cluster/blob/master/examples/complete/main.tf
-
+## installation:
+1. `export TF_VAR_cluster_encryption_config_kms_key_id=arn:aws:kms:us-east-2:<ACCNT>:key/<KEY>`
+2. terraform init
+3. terraform plan
+4. terraform apply
 ## Module Design and Project Objectives
 ### base EKS cluster: [CloudPosse](https://github.com/cloudposse/terraform-aws-eks-cluster)
 - the objective of the project is to create a full-blown EKS cluster that can host a kubernetes application
@@ -93,7 +97,7 @@
 -  `Error: "policy" contains an invalid JSON: invalid character 'k' looking for beginning of value`
 - this variable needs to be set to the **full ARN**, not just the kms key ID: `cluster_encryption_config_kms_key_id`
 - this confguration is coming from the "locals" block in the main module https://github.com/cloudposse/terraform-aws-eks-cluster
-- FIX: `export TF_VAR_cluster_encryption_config_kms_key_id=arn:aws:kms:us-east-2:240195868935:key/3fad647b-db99-4b5e-bdb7-9f2d78410077`
+- FIX: `export TF_VAR_cluster_encryption_config_kms_key_id=arn:aws:kms:us-east-2:<ACCNT>:key/<KEY>`
 
 ## kubectl configuration and checkout after cluster is up
 
