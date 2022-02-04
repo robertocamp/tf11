@@ -90,11 +90,10 @@
 - `terraform show -no-color tfplan-fri-31DEC-1000.plan > plan.txt`
 
 ## issue with `terraform apply`
--  `Error: error creating EKS Cluster (demo-dev-c1-cluster): InvalidParameterException: The keyArn for encryptionConfig is invalid.`
+-  `Error: "policy" contains an invalid JSON: invalid character 'k' looking for beginning of value`
 - this variable needs to be set to the **full ARN**, not just the kms key ID: `cluster_encryption_config_kms_key_id`
 - this confguration is coming from the "locals" block in the main module https://github.com/cloudposse/terraform-aws-eks-cluster
-
-
+- FIX: `export TF_VAR_cluster_encryption_config_kms_key_id=arn:aws:kms:us-east-2:240195868935:key/3fad647b-db99-4b5e-bdb7-9f2d78410077`
 
 ## kubectl configuration and checkout after cluster is up
 
