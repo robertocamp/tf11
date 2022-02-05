@@ -114,27 +114,34 @@ aws eks update-kubeconfig \
   ```
 - validate context configuration: `kubectl config get-contexts`
 - validate cluster communication: `kubectl get svc`
-
+- get kubernetes version: `kubectl version -o json`
+### install AWS eksctl
+- `brew tap weaveworks/tap`
+- `brew install weaveworks/tap/eksctl`
 ## ALB and Ingress setup
+- AWS Load Balancer controller manages the following AWS resources:
+  + Application Load Balancers to satisfy Kubernetes ingress objects
+  + Network Load Balancers to satisfy Kubernetes service objects of type LoadBalancer with appropriate annotations
+
+
+### installation with Helm chart
+#### git development branch
 - after the base EKS cluster is up and running (validated with kubectl) merge into main and then checkout a new branch to complete the AWS ALB and EKS ingress configuration
 - `git checkout main`
 - `git merge dev1`
 - `git add .`
 - `git commit -am "merge dev1 into main"`
 - `git push "update main with dev1 branch"`
-- `git checkout -b alb_and_ingress`
+- `git checkout -b aws-lb-helms-chart`
 
-### CloudPosse alb and ingress modules:
-> the strategy will be to integrate  CloudPosse alb module into the main.tf , using the resources that are already crated like VPC , as inputs to the alb-ingress module: https://registry.terraform.io/modules/cloudposse/alb/aws/latest
+#### setup IAM for ServiceAccount
+- The controller runs on the worker nodes, so it needs access to the AWS ALB/NLB resources via IAM permissions.
+- The IAM permissions can either be setup via IAM roles for ServiceAccount or can be attached directly to the worker node IAM roles.
 
-#### Provision Instructions
-- module code
-```
-module "alb" {
-  source  = "cloudposse/alb/aws"
-  version = "0.36.0"
-  # insert the 35 required variables here
-}
-```
-- several variable are already present in the configuration from the base EKS cluster
-- terraform init
+
+
+
+
+
+- `helm repo add eks https://aws.github.io/eks-charts`
+- `helm install aws-load-balancer-controller eks/aws-load-balancer-controller --set clusterName=my-cluster -n kube-system --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller`
