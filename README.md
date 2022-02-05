@@ -115,9 +115,15 @@ aws eks update-kubeconfig \
 - validate context configuration: `kubectl config get-contexts`
 - validate cluster communication: `kubectl get svc`
 - get kubernetes version: `kubectl version -o json`
-### install AWS eksctl
-- `brew tap weaveworks/tap`
-- `brew install weaveworks/tap/eksctl`
+- view cluster nodes:  `kubectl get nodes -o wide`
+- view workloads in cluster: `kubectl get pods --all-namespaces -o wide`
+- create demo namespace: `kubectl create namespace demo`
+
+
+
+
+
+
 ## ALB and Ingress setup
 - AWS Load Balancer controller manages the following AWS resources:
   + Application Load Balancers to satisfy Kubernetes ingress objects
@@ -134,14 +140,52 @@ aws eks update-kubeconfig \
 - `git push "update main with dev1 branch"`
 - `git checkout -b aws-lb-helms-chart`
 
+
+####  install AWS eksctl
+- update developer tools:
+  + `sudo rm -rf /Library/Developer/CommandLineTools`
+  + `sudo xcode-select --install`
+- `brew tap weaveworks/tap`
+- `brew install weaveworks/tap/eksctl`
+- `the IAM security principal that you're using must have permissions to work with Amazon EKS IAM roles and service linked roles`
+
 #### setup IAM for ServiceAccount
 - The controller runs on the worker nodes, so it needs access to the AWS ALB/NLB resources via IAM permissions.
 - The IAM permissions can either be setup via IAM roles for ServiceAccount or can be attached directly to the worker node IAM roles.
+- create the oidc iam binding: (this was likely already done in the eks tf installation)
+- verify whether or not cluster already has oidc provider: `aws eks describe-cluster --name demo-dev-c1-cluster --query "cluster.identity.oidc.issuer" --output text`
+```
+eksctl utils associate-iam-oidc-provider \
+    --region us-east-2 \
+    --cluster demo-dev-c1-cluster \
+    --approve
+```
+- you might see a msg that "IAM Open ID Connect provider is already associated with cluster "demo-dev-c1-cluster" in "us-east-2""
+- download the IAM policy for the AWS Load Balancer:
+- `curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json`
 
+- create an IAM policy called AWSLoadBalancerControllerIAMPolicy
+```
+aws iam create-policy \
+    --policy-name AWSLoadBalancerControllerIAMPolicy \
+    --policy-document file://iam-policy.json
+```
 
+- Create a IAM role and ServiceAccount for the Load Balancer controller, use the ARN from the step above:
+- arn:aws:iam::240195868935:policy/AWSLoadBalancerControllerIAMPolicy
+```
+eksctl create iamserviceaccount \
+--cluster=demo-dev-c1-cluster \
+--namespace=kube-system \
+--name=aws-load-balancer-controller \
+--attach-policy-arn=arn:aws:iam::240195868935:policy/AWSLoadBalancerControllerIAMPolicy \
+--override-existing-serviceaccounts \
+--approve
+```
+#### installling the Chart
+- add eks reop to Helm: `helm repo add eks https://aws.github.io/eks-charts`
+- install the TargetGroupBinding CRDs:
+  + `kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master"`
+- Install the AWS Load Balancer controller, if using iamserviceaccount
+  + `helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=demo-dev-c1-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller`
 
-
-
-
-- `helm repo add eks https://aws.github.io/eks-charts`
-- `helm install aws-load-balancer-controller eks/aws-load-balancer-controller --set clusterName=my-cluster -n kube-system --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller`
