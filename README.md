@@ -2,6 +2,11 @@
 > AWS TF deployment based on:
 - https://github.com/cloudposse/terraform-aws-eks-cluster/blob/master/examples/complete/main.tf
 ## installation:
+1. create symmetric kms key for encrypt/decrypt on the cluster:
+  + key name: cluster1-kms
+  + key usage permissions:
+    - AWSServiceRoleForAmazonEKS
+    - AWSServiceRoleForAmazonEKSNodegroup
 1. `export TF_VAR_cluster_encryption_config_kms_key_id=arn:aws:kms:us-east-2:<ACCNT>:key/<KEY>`
 2. terraform init
 3. terraform plan
