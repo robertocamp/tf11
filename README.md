@@ -189,3 +189,39 @@ eksctl create iamserviceaccount \
 - Install the AWS Load Balancer controller, if using iamserviceaccount
   + `helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=demo-dev-c1-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller`
 
+## Deploy Sample App
+### architecture
+- The `amd64` or `arm64` values under the `kubernetes.io/arch` key mean that the application can be deployed to either hardware architecture (if you have both in your cluster).
+- This is possible because this image is a multi-architecture image, but not all are. 
+- You can determine the hardware architecture that the image is supported on by viewing the image details in the repository that you're pulling it from
+- When deploying images that don't support a hardware architecture type, or that you don't want the image deployed to, remove that type from the manifest
+### Deployment
+1. take the AWS sample deployment and rename to sample-deployment.yml
+2. change `replicas:` to "1"
+3. deploy: `kubectl apply -f sample-deployment.yml`
+4. verfiy: `kubectl get pods -A`
+  - Pods in the Pending state can't be scheduled onto a node
+  - this can occur due to insufficient resources or with the use of hostPort
+
+#### troubleshooting sample deployment: no nodes available
+##### issue: sample deployemnt cannot be scheduled
+- `demo          eks-sample-linux-deployment-85d87f64cc-vzxq4   0/1     Pending   0          17m`
+- `Pods in the Pending state can't be scheduled onto a node`
+- `Warning  FailedScheduling  26s (x18 over 16m)  default-scheduler  0/2 nodes are available: 2 Too many pods.`
+##### trobuleshooting
+- had to change the ASG "desired nodes" from "2" to "3" in the AWS console
+- this should not be necessary --ASG policy needs to be configured properly in the TF
+- `kubectl -n demo describe pod eks-sample-linux-deployment-85d87f64cc-vzxq4`
+  + the value for IP: is a unique IP that's assigned to the pod from the CIDR block assigned to the subnet that the node is in
+
+### Service
+- A service allows you to access all replicas through a single IP address or name
+- if you have applications that need to interact with other AWS services, we recommend that you create Kubernetes service accounts for your pods and associate them to AWS IAM accounts
+- By specifying service accounts, your pods have only the minimum permissions that you specify for them to interact with other services
+- copy AWS sample to eks-sample-service.yml
+- change namespace to 'demo'
+- **service validation**
+  + `kubectl exec -it -n demo eks-sample-linux-deployment-85d87f64cc-vzxq4 -- /bin/sh`
+  + `curl eks-sample-linux-service`
+  + `cat /etc/resolv.conf`
+    + `nameserver 10.100.0.10` will be the nameserver automatically assigned to all the nodes in the cluster
