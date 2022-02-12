@@ -90,6 +90,29 @@ eksctl create iamserviceaccount \
 - Install the AWS Load Balancer controller, if using iamserviceaccount
   + `helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=demo-dev-c1-cluster --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller`
 
+#### validation of ALB setup:
+1. aws cli: `aws elbv2 describe-load-balancers`
+  + take the "DNSName" and put it in a web browser
+  + with no active ingress/services configured, you should see a '503' error
+2. kubectl: 
+  + `kubectl get pods -n kube-system`
+  + pods name(s) will be "aws-load-balancer-controller-[a-zA-Z0-9-]
+  + `kubectl logs -n kube-system { POD NAME }`
+  + from the kubectl command you should see output like this: ```{"level":"info","ts":1644036372.7499354,"logger":"controller-runtime.certwatcher","msg":"Updated current TLS certificate"}```
+
+##### Deploy sample 2048 game
+1. create namespace: `kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.4/docs/examples/2048/2048-namespace.yaml`
+2. copy deployment example:
+  + https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.4/docs/examples/2048/2048-deployment.yaml
+  + change `replicas` to 1
+  + apply: `apply -f deployment.yml`
+3. copy service example:
+  + https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.1.4/docs/examples/2048/2048-service.yaml
+  + change: `apiVersion: extensions/v1beta1`
+  + to: `networking.k8s.io/v1`
+  + apply: `kubectl apply -f ingress.yml  -n 2048-game`
+
+
 ## Deploy Sample App
 
 ### architecture
@@ -116,7 +139,31 @@ eksctl create iamserviceaccount \
 
 ### sample app with ALB:
 - https://aws.amazon.com/blogs/containers/introducing-oidc-identity-provider-authentication-amazon-eks/
+- Kubernetes Ingress is an API resource that allows you manage external or internal HTTP(S) access to Kubernetes services running in a cluster
+-  Amazon Elastic Load Balancing Application Load Balancer (ALB) is a popular AWS service that load balances incoming traffic at the application layer (layer 7) across multiple targets, such as Amazon EC2 instances, in a region
+- ALB supports multiple features including host or path based routing, TLS (Transport Layer Security) termination, WebSockets, HTTP/2, AWS WAF (Web Application Firewall) integration, integrated access logs, and health checks.
+- The Ingress resource uses the ALB to route HTTP(S) traffic to different endpoints within the cluster
+- **terms**
+  + *ALB*: AWS Application Load Balancer
+  + *ENI*: Elastic Network Interfaces
+  + *NodePort*: When a user sets the Service type field to NodePort, Kubernetes allocates a static port from a range and each worker node will proxy that same port to said Service
 
+#### ingress creation
+1. the controller watches for ingress events from the API server
+  + When it finds Ingress resources that satisfy its requirements, it starts the creation of AWS resources
+2. An ALB is created for the Ingress resource
+3. TargetGroups are created for each backend specified in the Ingress resource
+  + [What are Target Groups?](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html)
+4. Listeners are created for every port specified as Ingress resource annotation. If no port is specified, sensible defaults (80 or 443) are used
+   + [What are listeners?](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-listeners.html)
+  + The rules that you define for your listener determine how the load balancer routes requests to the targets in one or more target groups
+#### Ingress Traffic
+- AWS ALB Ingress controller supports two traffic modes: instance mode and ip mode
+- Users can explicitly specify these traffic modes by declaring the `alb.ingress.kubernetes.io/target-type` annotation on the Ingress and the service definitions
+  + **instance mode**: Ingress traffic starts from the ALB and reaches the NodePort opened for your service. 
+   - Traffic is then routed to the pods within the cluster
+  + **ip mode**: Ingress traffic starts from the ALB and reaches the pods within the cluster directly
+   - To use this mode, the networking plugin for the Kubernetes cluster must use a secondary IP address on ENI as pod IP, also known as the AWS CNI plugin for Kubernetes
 
 #### troubleshooting sample deployment: no nodes available
 ##### issue: sample deployemnt cannot be scheduled
@@ -128,8 +175,8 @@ eksctl create iamserviceaccount \
 - this should not be necessary --ASG policy needs to be configured properly in the TF
 - `kubectl -n demo describe pod eks-sample-linux-deployment-85d87f64cc-vzxq4`
   + the value for IP: is a unique IP that's assigned to the pod from the CIDR block assigned to the subnet that the node is in
-
-
+- The open source AWS ALB Ingress controller triggers the creation of an ALB and the necessary supporting AWS resources whenever a Kubernetes user declares an Ingress resource in the cluster.
+- The AWS ALB Ingress controller works on any Kubernetes cluster including Amazon Elastic Kubernetes Service (Amazon EKS)
 
 ## links
 - https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html
@@ -140,4 +187,4 @@ eksctl create iamserviceaccount \
 - https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html
 - https://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-load-balancers.html
 - https://aws.amazon.com/blogs/containers/introducing-oidc-identity-provider-authentication-amazon-eks/
-
+- https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html
