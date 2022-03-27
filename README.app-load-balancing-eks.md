@@ -188,3 +188,17 @@ eksctl create iamserviceaccount \
 - https://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-load-balancers.html
 - https://aws.amazon.com/blogs/containers/introducing-oidc-identity-provider-authentication-amazon-eks/
 - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html
+
+
+### AWS ALB
+- kubernetes [loadblancer]( https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer)
+- kubernetes [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+- Do I need AWS ALB for application running in EKS? [Start here](https://docs.aws.amazon.com/eks/latest/userguide/alb-ingress.html)  --not strictly required, but highly recommended ; read the docs!
+  + When you create a Kubernetes ingress, an AWS Application Load Balancer (ALB) is provisioned that load balances application traffic.
+  + ALBs can be used with pods that are deployed to nodes or to AWS Fargate
+  + You can deploy an ALB to public or private subnets.
+  + with ALB, *application traffic is balanced at L7 of the OSI model*
+  + To load balance network traffic at L4, *you deploy a Kubernetes service of the LoadBalancer type*
+  + in order to load balance traffic to EKS application you must have:
+    - a working EKS cluster
+    - the AWS Load Balancer Controller provisioned on your cluster

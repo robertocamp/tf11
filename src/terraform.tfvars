@@ -6,7 +6,7 @@ namespace = "demo"
 
 stage = "dev"
 
-name = "c1"
+name = "brahma0"
 
 kubernetes_version = "1.21"
 
@@ -18,11 +18,11 @@ cluster_log_retention_period = 7
 
 instance_types = ["t2.micro"]
 
-desired_size = 2
+desired_size = 3
 
 max_size = 3
 
-min_size = 2
+min_size = 3
 
 kubernetes_labels = {}
 
