@@ -48,6 +48,7 @@ How can I list, show all the charts installed by helm on a K8s?
 - ACME protocol" https://datatracker.ietf.org/doc/html/rfc8555
 
 ## cert manager
+- cert-manager adds certificates and certificate issuers as resource types in Kubernetes clusters, and simplifies the process of obtaining, renewing and using those certificates.
 - cert-manager runs within your Kubernetes cluster as a series of deployment resources
 - it utilizes CustomResourceDefinitions to configure Certificate Authorities and request certificates
 - It is deployed using regular YAML manifests, like any other application on Kubernetes
@@ -56,12 +57,28 @@ How can I list, show all the charts installed by helm on a K8s?
 - cert manager will talk to the CA and place the cert we are looking for into the specified Kubernetes secret
 - cert manager can also replace the cert when it expires
 
+## Creating a Certificate Issuer
+- Issuers and cluster issuers are resources which supply certificates to your cluster. 
+- The default Cert-Manager installation is incapable of issuing certificates without additional configuration 
+- Adding an issuer that’s configured to use Let’s Encrypt lets you dynamically acquire new certificates for services in your cluster.
+- 'issuers.yml' is a file we'll deploy to define Certificate Authorities: in this use case the CA will be Let's Encrypt
+- another file typically defines the certificate that we'll need
+- everything else should hapeen automatically
+
+### using cert-manager with the "ACME" issuer type
+- The ACME Issuer type represents a single account registered with the Automated Certificate Management Environment (ACME) Certificate Authority server
+- When you create a new ACME Issuer, cert-manager will generate a private key which is used to identify you with the ACME server
+- Certificates issued by public ACME servers are typically trusted by client's computers by default.
+- ACME certificates are typically free
+#### ACME 'challenges'
+- In order for the ACME CA server to verify that a client owns the domain, or domains, a certificate is being requested for, the client must complete "challenges". 
+- This is to ensure clients are unable to request certificates for domains they do not own and as a result, fraudulently impersonate another's site
+- As detailed in the [RFC8555](https://datatracker.ietf.org/doc/html/rfc8555), cert-manager offers two challenge validations - HTTP01 and DNS01 challenges
 ### installing cert-manager with Helm
 - Notes
   + cert-manager provides Helm charts as a first-class method of installation on both Kubernetes and OpenShift
   + **Be sure never to embed cert-manager as a sub-chart of other Helm charts; cert-manager manages non-namespaced resources in your cluster and care must be taken to ensure that it is installed exactly once**
 - Procedure
-new docs: 14-may-2022
   1. `helm repo add jetstack https://charts.jetstack.io`
   2. `helm repo update`
   3. Replace the version number shown above with the latest release shown in the [Cert-Manager documentation](https://cert-manager.io/docs/installation/helm/#1-add-the-jetstack-helm-repository) v0.16:
@@ -77,6 +94,14 @@ new docs: 14-may-2022
     + **additional manual checkout:**
     + `kubectl get pods --namespace cert-manager`
     + You should see the `cert-manager`, `cert-manager-cainjector`, and `cert-manager-webhook` pods in a Running state
+      - Now you’re ready to add an issuer to get certificates from Let’s Encrypt.
+  6. Create an Issuer to test the webhook works okay.
+    + `touch test-resources.yaml` (see file for content)
+    + `kubectl apply -f test-resources.yml`
+    + `kubectl describe certificate -n cert-manager-test`
+    + `kubectl get secrets -n cert-manager-test`
+  7. Creating a Certificate Issuer using Let's Encrypt
+    + `touch issuer.yml`
 tar xzf kubectl-cert-manager.tar.gz
 exiting docs: 14-may-2022
   1. add the jetstack Helm repo: `helm repo add jetstack https://charts.jetstack.io`

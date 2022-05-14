@@ -1,4 +1,3 @@
-# Create an Issuer to test the webhook works
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -23,4 +22,3 @@ spec:
   secretName: selfsigned-cert-tls
   issuerRef:
     name: test-selfsigned
-EOF
