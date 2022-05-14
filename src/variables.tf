@@ -99,7 +99,7 @@ variable "cluster_encryption_config_enabled" {
   description = "Set to `true` to enable Cluster Encryption Configuration"
 }
 
-variable "cluster_encryption_config_kms_key_id" {
+variable "q" {
   type        = string
   default     = ""
   description = "KMS Key ID to use for cluster encryption config"

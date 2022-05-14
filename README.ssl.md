@@ -1,4 +1,17 @@
 # adding SSL cert to k8s cluster
+
+## verify exisitng deployment
+- `kubectl get namespaces`
+- `kubectl get deployments -n demo`
+- `kubectl get pods -n demo`
+- `kubectl describe pod fiber-demo-55b86cdff6-lrcdn`
+- `kubectl describe service -n demo | grep LoadBalancer`
+  + paste into browser: http://ac8a6da1e8be74ea8988278960b02d3b-1550396727.us-east-2.elb.amazonaws.com/
+- **show all helm lists**
+- `helm list --all-namespaces`
+How can I list, show all the charts installed by helm on a K8s?
+
+
 ## Overview
 - in Kubernetes SSL and TLS certificates are stored as Kubernetes secrets
 - they are generally loaded into namespaces
@@ -48,6 +61,24 @@
   + cert-manager provides Helm charts as a first-class method of installation on both Kubernetes and OpenShift
   + **Be sure never to embed cert-manager as a sub-chart of other Helm charts; cert-manager manages non-namespaced resources in your cluster and care must be taken to ensure that it is installed exactly once**
 - Procedure
+new docs: 14-may-2022
+  1. `helm repo add jetstack https://charts.jetstack.io`
+  2. `helm repo update`
+  3. Replace the version number shown above with the latest release shown in the [Cert-Manager documentation](https://cert-manager.io/docs/installation/helm/#1-add-the-jetstack-helm-repository) v0.16:
+  4. `helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.8.0 --set installCRDs=true`
+  5. verify the installation
+    + installing kubernetes-related  software on the mac can sometimes require chosing the right tarball from the source repository
+    + The Apple M1 is an ARM-based system on a chip (SoC) designed by Apple Inc.
+    + for the Cert Manager kubectl plugin, try this source: https://github.com/cert-manager/cert-manager/releases/download/v1.8.0/kubectl-cert_manager-darwin-arm64.tar.gz
+    + `curl -L -o kubectl-cert-manager.tar.gz https://github.com/cert-manager/cert-manager/releases/download/v1.8.0/kubectl-cert_manager-darwin-arm64.tar.gz`
+    + `tar xzf kubectl-cert-manager.tar.gz`
+    + `sudo mv kubectl-cert_manager /usr/local/bin`
+    + `kubectl cert-manager check api`
+    + **additional manual checkout:**
+    + `kubectl get pods --namespace cert-manager`
+    + You should see the `cert-manager`, `cert-manager-cainjector`, and `cert-manager-webhook` pods in a Running state
+tar xzf kubectl-cert-manager.tar.gz
+exiting docs: 14-may-2022
   1. add the jetstack Helm repo: `helm repo add jetstack https://charts.jetstack.io`
   2. Update your local Helm chart repository cache: `helm repo update`
   3. create a "monitoring" namespace as some of the CRD configuration references this namespace: `kubectl create namespace monitoring`
@@ -106,3 +137,4 @@ https://myhightech.org/posts/20210402-cert-manager-on-eks/
 https://github.com/antonputra/tutorials/tree/main/lessons/083
 https://aws.amazon.com/premiumsupport/knowledge-center/terminate-https-traffic-eks-acm/
 https://cert-manager.io/docs/installation/helm/
+https://www.howtogeek.com/devops/how-to-install-kubernetes-cert-manager-and-configure-lets-encrypt/
