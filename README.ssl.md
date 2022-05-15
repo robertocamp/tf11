@@ -7,9 +7,21 @@
 - `kubectl describe pod fiber-demo-55b86cdff6-lrcdn`
 - `kubectl describe service -n demo | grep LoadBalancer`
   + paste into browser: http://ac8a6da1e8be74ea8988278960b02d3b-1550396727.us-east-2.elb.amazonaws.com/
+- **our objective is to tie this web service to our domain name and to obtain a valid SSL certificate from Let's Encrypt**
+
+## tie in R53 records to ESK K8s deploymebnt
+1. create IAM Policy
+  + allows ExternalDNS to update Route53 Resource Record Sets and Hosted Zones. 
+2. create IAM Role
+  + create an IAM Role that can be assumed by the ExternalDNS Pod
+3. Attach the IAM Policy (above) to the role
+4. verify hosted zone info: this comnmand renders the hosted zone ID
+- `aws route53 list-hosted-zones-by-name --output json --dns-name "brahmabarillinois.com." | jq -r '.HostedZones[0].Id'`
+5. Make a note of the nameservers that were assigned to your new zone.
+- `aws route53 list-resource-record-sets --output json --hosted-zone-id "/hostedzone/Z01064143T6XXH6VOL45H" --query "ResourceRecordSets[?Type == 'NS']" | jq -r '.[0].ResourceRecords[].Value'`
+## Helm
 - **show all helm lists**
 - `helm list --all-namespaces`
-How can I list, show all the charts installed by helm on a K8s?
 
 
 ## Overview
@@ -57,7 +69,7 @@ How can I list, show all the charts installed by helm on a K8s?
 - cert manager will talk to the CA and place the cert we are looking for into the specified Kubernetes secret
 - cert manager can also replace the cert when it expires
 
-## Creating a Certificate Issuer
+## creating a certificate Issuer
 - Issuers and cluster issuers are resources which supply certificates to your cluster. 
 - The default Cert-Manager installation is incapable of issuing certificates without additional configuration 
 - Adding an issuer that’s configured to use Let’s Encrypt lets you dynamically acquire new certificates for services in your cluster.
@@ -74,6 +86,28 @@ How can I list, show all the charts installed by helm on a K8s?
 - In order for the ACME CA server to verify that a client owns the domain, or domains, a certificate is being requested for, the client must complete "challenges". 
 - This is to ensure clients are unable to request certificates for domains they do not own and as a result, fraudulently impersonate another's site
 - As detailed in the [RFC8555](https://datatracker.ietf.org/doc/html/rfc8555), cert-manager offers two challenge validations - HTTP01 and DNS01 challenges
+##### HTTP01
+- HTTP01 challenges are completed by presenting a computed key, that should be present at a HTTP URL endpoint and is routable over the internet
+- This URL will use the domain name requested for the certificate. 
+- Once the ACME server is able to get this key from this URL over the internet, the ACME server can validate you are the owner of this domain
+- When a HTTP01 challenge is created, cert-manager will automatically configure your cluster ingress to route traffic for this URL to a small web server that presents this key
+##### DNS01
+- DNS01 challenges are completed by providing a computed key that is present at a DNS TXT record
+- Once this TXT record has been propagated across the internet, the ACME server can successfully retrieve this key via a DNS lookup and can validate that the client owns the domain for the requested certificate
+- With the correct permissions, cert-manager will automatically present this TXT record for your given DNS provider
+##### CONFIGURATION: ACME issuer
+- All ACME Issuers follow a similar configuration structure - a clients email, a server URL, a privateKeySecretRef, and one or more solvers
+- Solvers come in the form of dns01 and http01 stanzas
+- typically an eks kubernetes cluster will have an **ingress controller** that accepts public traffic
+- Kubernetes ingress is An API object that manages external access to the services in a cluster, typically HTTP. 
+- *kubernetes Ingress* may provide load balancing, SSL termination and name-based virtual hosting
+- Kubernetes Ingress is an API object that provides routing rules to manage external users’ access to the services in a Kubernetes cluster
+- With Ingress, you can easily set up rules for routing traffic without creating a bunch of Load Balancers or exposing each service on the node
+- we are going to use and existing ingress controller to accept incoming web requests for the Let's Encrypt challenge
+- our EKS deployment specifically uses this: https://aws.amazon.com/blogs/opensource/kubernetes-ingress-aws-alb-ingress-controller/
+-  
+
+
 ### installing cert-manager with Helm
 - Notes
   + cert-manager provides Helm charts as a first-class method of installation on both Kubernetes and OpenShift
@@ -163,3 +197,4 @@ https://github.com/antonputra/tutorials/tree/main/lessons/083
 https://aws.amazon.com/premiumsupport/knowledge-center/terminate-https-traffic-eks-acm/
 https://cert-manager.io/docs/installation/helm/
 https://www.howtogeek.com/devops/how-to-install-kubernetes-cert-manager-and-configure-lets-encrypt/
+https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md

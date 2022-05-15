@@ -12,7 +12,11 @@
 ## deployment considerations
 - The AWS Load Balancer Controller creates ALBs and the necessary supporting AWS resources whenever a Kubernetes ingress resource is created on the cluster with the kubernetes.io/ingress.class: alb annotation
 - The ingress resource configures the ALB to route HTTP or HTTPS traffic to different pods within the cluster
--  To ensure that your ingress objects use the AWS Load Balancer Controller, add the following annotation to your Kubernetes ingress specification
+-  To ensure that your ingress objects use the AWS Load Balancer Controller, add the following annotation to your Kubernetes ingress specification:
+```
+annotations:
+    kubernetes.io/ingress.class: alb
+```
 
 
 ## ALB and Ingress setup
