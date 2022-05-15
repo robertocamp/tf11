@@ -58,7 +58,7 @@ annotations:
 - The controller runs on the worker nodes, so it needs access to the AWS ALB/NLB resources via IAM permissions.
 - The IAM permissions can either be setup via IAM roles for ServiceAccount or can be attached directly to the worker node IAM roles.
 - create the oidc iam binding: (this was likely already done in the eks tf installation)
-- verify whether or not cluster already has oidc provider: `aws eks describe-cluster --name demo-dev-c1-cluster --query "cluster.identity.oidc.issuer" --output text`
+- verify whether or not cluster already has oidc provider: `aws eks describe-cluster --name demo-dev-brahma0-cluster --query "cluster.identity.oidc.issuer" --output text`
 ```
 eksctl utils associate-iam-oidc-provider \
     --region us-east-2 \

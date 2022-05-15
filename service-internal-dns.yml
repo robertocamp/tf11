@@ -1,0 +1,19 @@
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fiber-demo
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: fiber-demo.brahmabarillinois.com
+  namespace: demo
+  labels:
+    app: fiber-demo
+spec:
+  selector:
+    app: fiber-demo
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  type: LoadBalancer
